@@ -17,6 +17,25 @@
     font-family: 'Noto Sans KR', sans-serif;
   }
 
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.13);
+    border-radius: 8px;
+    color: #94A3B8;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: background .2s, color .2s;
+    white-space: nowrap;
+  }
+  .home-btn:hover { background: rgba(255,255,255,0.15); color: #E2E8F0; }
+
   .header-bar {
     width: 100%; max-width: 540px;
     display: flex; justify-content: space-between; align-items: center;
@@ -111,6 +130,7 @@
 <body>
 
 <div class="header-bar">
+  <a href="index.html" class="home-btn">⌂ 목차</a>
   <span class="series">IFRS 18 · SECTION 1 OF 5 · 투자범주</span>
   <span class="counter" id="counter">01 / 12</span>
 </div>
