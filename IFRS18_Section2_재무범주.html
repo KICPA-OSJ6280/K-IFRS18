@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFRS 18 | Section 2. 재무범주</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0F172A;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 24px 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .header-bar {
+    width: 100%; max-width: 540px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .header-bar .series { font-family:'Space Mono',monospace; font-size:10px; color:#64748B; letter-spacing:2px; }
+  .header-bar .counter { font-family:'Space Mono',monospace; font-size:11px; color:#64748B; }
+
+  .card {
+    width: 100%; max-width: 540px; min-height: 600px;
+    background: linear-gradient(145deg,#1E293B 0%,#172033 60%,#0F172A 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.13);
+    padding: 30px 28px 26px;
+    display: none; flex-direction: column;
+    position: relative; overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: fadeSlide .35s cubic-bezier(.4,0,.2,1) both;
+  }
+  .card.active { display: flex; }
+
+  @keyframes fadeSlide {
+    from { opacity:0; transform:translateY(12px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .glow { position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; pointer-events:none; }
+
+  .section-label { font-family:'Space Mono',monospace; font-size:9px; color:#475569; letter-spacing:2px; margin-bottom:5px; }
+  .tag-badge { display:inline-block; font-family:'Space Mono',monospace; font-size:10px; font-weight:700; padding:4px 10px; border-radius:4px; letter-spacing:1.5px; color:#0F172A; margin-bottom:16px; }
+
+  .card-title { font-size:23px; font-weight:900; color:#FFFFFF; line-height:1.25; margin-bottom:6px; }
+  .card-subtitle { font-size:12px; color:#94A3B8; margin-bottom:18px; line-height:1.5; }
+  .divider { width:40px; height:2px; border-radius:1px; margin-bottom:18px; }
+
+  /* Definition box */
+  .def-box { padding:14px 16px; border-radius:12px; border-left:3px solid; background:rgba(255,255,255,0.04); margin-bottom:14px; flex-shrink:0; }
+  .def-box .def-label { font-size:9px; font-weight:700; letter-spacing:1.5px; margin-bottom:6px; font-family:'Space Mono',monospace; }
+  .def-box .def-text  { font-size:12.5px; color:#E2E8F0; line-height:1.75; font-weight:500; }
+
+  /* Content list */
+  .content-list { display:flex; flex-direction:column; gap:10px; flex:1; }
+  .content-item { display:flex; gap:12px; padding:12px 14px; background:rgba(255,255,255,0.07); border-radius:12px; border:1px solid rgba(255,255,255,0.1); align-items:flex-start; }
+  .content-item .ico { font-size:19px; flex-shrink:0; margin-top:1px; }
+  .content-item .text-head { font-size:12.5px; font-weight:700; color:#FFFFFF; margin-bottom:3px; }
+  .content-item .text-body { font-size:11.5px; color:#94A3B8; line-height:1.65; }
+  .content-item .text-body b { color:#CBD5E1; font-weight:600; }
+
+  /* Two-column */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; flex:1; }
+  .col-box { padding:13px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; gap:7px; }
+  .col-box .col-head { font-size:11px; font-weight:700; padding-bottom:7px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:5px; }
+  .col-box .col-item { font-size:11px; color:#94A3B8; line-height:1.5; padding:3px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .col-box .col-item:last-child { border-bottom:none; }
+  .col-box .col-item b { color:#E2E8F0; }
+
+  /* Highlight box */
+  .highlight-box { padding:13px 15px; border-radius:12px; }
+  .highlight-box .hl-head { font-size:12px; font-weight:700; margin-bottom:5px; }
+  .highlight-box .hl-body { font-size:11.5px; color:#94A3B8; line-height:1.65; }
+  .highlight-box .hl-body b { color:#CBD5E1; }
+
+  /* Flow steps */
+  .flow-list { display:flex; flex-direction:column; gap:0; flex:1; }
+  .flow-item { display:flex; gap:12px; align-items:flex-start; }
+  .flow-line-col { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+  .flow-circle { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#0F172A; flex-shrink:0; }
+  .flow-connector { width:2px; flex:1; min-height:14px; background:rgba(255,255,255,0.1); }
+  .flow-content { padding-bottom:14px; flex:1; }
+  .flow-content .f-head { font-size:12.5px; font-weight:700; color:#FFFFFF; margin-bottom:2px; margin-top:3px; }
+  .flow-content .f-body { font-size:11.5px; color:#94A3B8; line-height:1.6; }
+  .flow-content .f-body b { color:#CBD5E1; }
+
+  /* Table */
+  .comp-table { width:100%; border-collapse:collapse; }
+  .comp-table th { font-size:11px; font-weight:700; padding:8px 10px; background:rgba(255,255,255,0.07); color:#CBD5E1; text-align:left; }
+  .comp-table th:first-child { border-radius:8px 0 0 0; } .comp-table th:last-child { border-radius:0 8px 0 0; }
+  .comp-table td { font-size:11px; color:#94A3B8; padding:8px 10px; border-bottom:1px solid rgba(255,255,255,0.05); line-height:1.5; vertical-align:top; }
+  .comp-table td b { color:#E2E8F0; font-weight:600; }
+  .comp-table tr:last-child td { border-bottom:none; }
+  .ok   { color:#6EE7B7 !important; }
+  .warn { color:#FCD34D !important; }
+  .blue { color:#93C5FD !important; }
+  .red  { color:#F87171 !important; }
+  .orn  { color:#FCA5A5 !important; }
+
+  /* Formula box */
+  .formula-box { padding:14px 16px; border-radius:12px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); text-align:center; }
+  .formula-box .formula-text { font-family:'Space Mono',monospace; font-size:12px; color:#E2E8F0; line-height:1.9; }
+  .formula-box .formula-label { font-size:10px; color:#64748B; margin-top:6px; font-family:'Space Mono',monospace; }
+
+  /* Card footer */
+  .card-footer { margin-top:18px; padding-top:13px; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; }
+  .footer-brand { font-size:10px; color:#475569; font-family:'Space Mono',monospace; letter-spacing:1px; }
+  .dots { display:flex; gap:3px; }
+  .dot { height:5px; border-radius:3px; background:rgba(255,255,255,0.2); transition:all .3s ease; cursor:pointer; border:none; }
+
+  /* Nav */
+  .nav-area { display:flex; gap:12px; margin-top:18px; align-items:center; }
+  .nav-btn { width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.13); color:#CBD5E1; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+  .nav-btn:hover { background:rgba(255,255,255,0.15); }
+  .nav-btn:disabled { color:#334155; cursor:not-allowed; }
+  .nav-label { font-size:11px; color:#64748B; font-family:'Space Mono',monospace; min-width:140px; text-align:center; }
+  .hint   { margin-top:10px; font-size:10px; color:#475569; font-family:'Space Mono',monospace; }
+  .credit { margin-top:6px;  font-size:10px; color:#334155; font-family:'Space Mono',monospace; letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <span class="series">IFRS 18 · SECTION 2 OF 5 · 재무범주</span>
+  <span class="counter" id="counter">01 / 12</span>
+</div>
+
+<!-- ══ CARD 1: OVERVIEW ══ -->
+<div class="card active" id="card-0" data-tag="OVERVIEW" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">OVERVIEW</div>
+  <div class="card-title">재무범주란?</div>
+  <div class="card-subtitle">IFRS 18이 명확히 구분한 자본조달 관련 손익 범주</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <div class="def-box" style="border-color:#F4A642">
+    <div class="def-label" style="color:#F4A642">IFRS 18 공식 정의</div>
+    <div class="def-text">기업이 <b style="color:#FCD34D">자본(부채·자본금)을 조달하는 활동</b>에서 발생하는 손익. 주로 <b style="color:#FCD34D">차입원가, 리스부채 이자, 기타 재무비용</b>이 해당되며, 투자범주·영업범주에 속하지 않는 자금조달 관련 항목입니다.</div>
+  </div>
+
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">🏦</span>
+      <div>
+        <div class="text-head">핵심: 자본조달 비용의 표준화</div>
+        <div class="text-body">IAS 1 하에서 이자비용·차입원가가 기업마다 다르게 표시되던 문제를 해결하기 위해 <b>재무범주로 명확히 분리</b>했습니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📌</span>
+      <div>
+        <div class="text-head">별도 소계 표시 의무</div>
+        <div class="text-body">포괄손익계산서에서 <b>재무범주 소계</b>를 영업범주·투자범주와 분리하여 반드시 표시해야 합니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">⚖️</span>
+      <div>
+        <div class="text-head">금융기업 예외 적용</div>
+        <div class="text-body">은행·보험사 등 <b>금융업이 주된 사업</b>인 기업은 이자비용을 영업범주로 분류합니다. (Section 4에서 상세 설명)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 2: BACKGROUND ══ -->
+<div class="card" id="card-1" data-tag="BACKGROUND" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">BACKGROUND</div>
+  <div class="card-title">재무범주가 생긴 이유</div>
+  <div class="card-subtitle">IAS 1의 한계와 IFRS 18의 해결 방향</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">🔀</span>
+      <div>
+        <div class="text-head">이자비용 표시 위치 혼재</div>
+        <div class="text-body">IAS 1 하에서 이자비용을 <b>영업이익 위/아래</b> 어디에 넣을지 기업 재량이었고, 비교가능성이 심각하게 훼손됐습니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📊</span>
+      <div>
+        <div class="text-head">차입원가와 영업원가의 혼동</div>
+        <div class="text-body">일부 기업이 <b>차입원가(IAS 23)</b>를 자산화하지 않고 비용으로 처리할 때 영업비용으로 분류해 영업이익을 왜곡시켰습니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🧭</span>
+      <div>
+        <div class="text-head">재무레버리지 분석 어려움</div>
+        <div class="text-body">투자자·분석가들이 <b>기업의 재무구조와 조달비용</b>을 영업성과와 분리해서 평가하기 어려웠습니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">✅</span>
+      <div>
+        <div class="text-head">IFRS 18의 해결</div>
+        <div class="text-body">차입원가·리스부채 이자 등 <b>자본조달 관련 모든 비용을 재무범주로 통합</b>하여 영업이익의 순수성을 확보했습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 3: P&L STRUCTURE ══ -->
+<div class="card" id="card-2" data-tag="P&L STRUCTURE" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">P&L STRUCTURE</div>
+  <div class="card-title">손익계산서 내<br>재무범주 위치</div>
+  <div class="card-subtitle">IFRS 18의 5단계 포괄손익계산서 중 재무범주 위치</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <div class="content-list" style="gap:8px">
+    <div class="content-item" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.07)">
+      <span class="ico">🟢</span>
+      <div><div class="text-head" style="color:#6EE7B7">① 영업범주</div><div class="text-body">매출, 매출원가, 판관비 → <b style="color:#6EE7B7">영업이익 소계</b></div></div>
+    </div>
+    <div class="content-item" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.07)">
+      <span class="ico">🔵</span>
+      <div><div class="text-head" style="color:#93C5FD">② 투자범주</div><div class="text-body">금융자산 손익, 지분법, PP&E 처분 → <b style="color:#93C5FD">투자범주 소계</b></div></div>
+    </div>
+    <div class="content-item" style="background:rgba(244,166,66,0.1);border-color:rgba(244,166,66,0.3)">
+      <span class="ico">🟡</span>
+      <div><div class="text-head" style="color:#FCD34D">③ 재무범주 ★ (이 섹션)</div><div class="text-body">이자비용, 리스부채 이자, 재무 헷지 손익 → <b style="color:#FCD34D">재무범주 소계</b></div></div>
+    </div>
+    <div class="content-item" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.07)">
+      <span class="ico">⬜</span>
+      <div><div class="text-head" style="color:#94A3B8">④ 법인세비용</div><div class="text-body">법인세 차감 → <b>당기순이익</b></div></div>
+    </div>
+    <div class="content-item" style="background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.07)">
+      <span class="ico">⬜</span>
+      <div><div class="text-head" style="color:#94A3B8">⑤ 기타포괄손익(OCI)</div><div class="text-body">재측정손익, FVOCI 평가손익 → <b>총포괄손익</b></div></div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 4: INCLUDED ① ══ -->
+<div class="card" id="card-3" data-tag="INCLUDED ①" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">INCLUDED ①</div>
+  <div class="card-title">포함 항목 ①<br>차입금·사채 관련</div>
+  <div class="card-subtitle">기업의 주된 자금조달 수단에서 발생하는 재무범주 손익</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">💳</span>
+      <div>
+        <div class="text-head">차입금 이자비용</div>
+        <div class="text-body">단기차입금·장기차입금에 대한 <b>유효이자율법</b> 이자비용. 은행 대출·외화차입금 모두 포함됩니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📜</span>
+      <div>
+        <div class="text-head">사채(회사채) 이자비용 및 할인·할증 상각</div>
+        <div class="text-body">발행한 사채의 <b>유효이자율법 이자비용</b>과 사채할인·할증발행차금 상각액</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🔁</span>
+      <div>
+        <div class="text-head">전환사채(CB) 이자비용</div>
+        <div class="text-body">전환사채 부채요소에 대한 <b>이자비용</b>. 전환권 파생부채의 공정가치 변동은 별도 검토 필요.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🏦</span>
+      <div>
+        <div class="text-head">신용한도(한도대출) 수수료</div>
+        <div class="text-body">미인출 한도에 대한 <b>약정수수료</b> 등 차입관련 부대비용으로서 유효이자율에 포함</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">💹</span>
+      <div>
+        <div class="text-head">차입금 조기상환 손실</div>
+        <div class="text-body">차입금·사채의 <b>조기상환 시 발생하는 손실(위약금·미상각 발행비용 등)</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 5: INCLUDED ② ══ -->
+<div class="card" id="card-4" data-tag="INCLUDED ②" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">INCLUDED ②</div>
+  <div class="card-title">포함 항목 ②<br>리스·기타 재무비용</div>
+  <div class="card-subtitle">리스부채·파생상품·연금 등 기타 재무범주 포함 항목</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">🏗️</span>
+      <div>
+        <div class="text-head">리스부채 이자비용 (IFRS 16)</div>
+        <div class="text-body">IFRS 16 적용 리스계약의 <b>리스부채에 대한 이자비용</b>. 사용권자산 감가상각은 영업범주, 이자는 재무범주로 분리됩니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📊</span>
+      <div>
+        <div class="text-head">전환사채 파생부채 평가손익</div>
+        <div class="text-body">전환사채에 내재된 <b>전환권·콜옵션 파생부채의 공정가치 변동손익</b> (재무조달 목적으로 발행된 경우)</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🔐</span>
+      <div>
+        <div class="text-head">재무 목적 헷지 손익</div>
+        <div class="text-body">차입금·사채 이자율 변동을 헷지하는 <b>이자율스왑(IRS)</b> 등 재무 헷지 수단의 손익</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">👴</span>
+      <div>
+        <div class="text-head">확정급여부채 순이자비용</div>
+        <div class="text-body">IAS 19 확정급여제도의 <b>순확정급여부채(자산)에 대한 순이자비용</b> (할인율 적용 증가분)</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">💱</span>
+      <div>
+        <div class="text-head">재무범주 항목 관련 외환손익</div>
+        <div class="text-body">외화차입금·사채에서 발생하는 <b>외환차손익</b> → 원천이 재무활동이므로 재무범주로 분류</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 6: LEASE DEEP DIVE ══ -->
+<div class="card" id="card-5" data-tag="IFRS 16 연계" data-color="#A855F7">
+  <div class="glow" style="background:radial-gradient(circle,#A855F722 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#A855F7">IFRS 16 연계</div>
+  <div class="card-title">리스와 재무범주<br>IFRS 16 연계 심화</div>
+  <div class="card-subtitle">IFRS 16 리스 손익의 영업/재무 범주 분리 처리</div>
+  <div class="divider" style="background:#A855F7"></div>
+
+  <div class="def-box" style="border-color:#A855F7">
+    <div class="def-label" style="color:#A855F7">핵심 원칙</div>
+    <div class="def-text">리스이용자의 손익은 <b style="color:#C4B5FD">사용권자산 감가상각(영업범주)</b>과 <b style="color:#C4B5FD">리스부채 이자비용(재무범주)</b>으로 반드시 분리 표시해야 합니다.</div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-box" style="background:rgba(0,196,154,0.06);border-color:rgba(0,196,154,0.2)">
+      <div class="col-head" style="color:#00C49A">🟢 영업범주</div>
+      <div class="col-item">사용권자산 감가상각비</div>
+      <div class="col-item">단기리스료 (실무적 간편법)</div>
+      <div class="col-item">소액자산 리스료</div>
+      <div class="col-item">변동리스료 (지수·요율 외)</div>
+    </div>
+    <div class="col-box" style="background:rgba(244,166,66,0.06);border-color:rgba(244,166,66,0.2)">
+      <div class="col-head" style="color:#F4A642">🟡 재무범주</div>
+      <div class="col-item">리스부채 이자비용</div>
+      <div class="col-item">리스 조기종료 손실</div>
+      <div class="col-item">외화리스 환산손익</div>
+      <div class="col-item">재무 헷지 관련 손익</div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);margin-top:12px">
+    <div class="hl-head" style="color:#A855F7">⚠️ 실무 주의사항</div>
+    <div class="hl-body">기존에 <b>리스비용 전체를 영업비용으로 일괄 처리</b>했다면, IFRS 18 적용 시 이자 부분을 재무범주로 재분류해야 합니다. ERP 계정 분리 설계가 필요합니다.</div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 7: EXCLUDED ══ -->
+<div class="card" id="card-6" data-tag="EXCLUDED" data-color="#EF5B8D">
+  <div class="glow" style="background:radial-gradient(circle,#EF5B8D22 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#EF5B8D">EXCLUDED</div>
+  <div class="card-title">재무범주에서<br>제외되는 항목</div>
+  <div class="card-subtitle">헷갈리기 쉬운 제외 항목과 올바른 범주 정리</div>
+  <div class="divider" style="background:#EF5B8D"></div>
+
+  <div class="two-col">
+    <div class="col-box" style="background:rgba(0,196,154,0.06);border-color:rgba(0,196,154,0.2)">
+      <div class="col-head" style="color:#00C49A">→ 영업범주로</div>
+      <div class="col-item">사용권자산 감가상각</div>
+      <div class="col-item">단기·소액 리스료</div>
+      <div class="col-item">영업 목적 파생상품 손익</div>
+      <div class="col-item">금융업의 이자비용</div>
+      <div class="col-item">매입채무 관련 이자</div>
+      <div class="col-item">충당부채 할인액 증가</div>
+    </div>
+    <div class="col-box" style="background:rgba(91,141,239,0.06);border-color:rgba(91,141,239,0.2)">
+      <div class="col-head" style="color:#5B8DEF">→ 투자범주로</div>
+      <div class="col-item">수취이자·배당금</div>
+      <div class="col-item">금융자산 평가·처분손익</div>
+      <div class="col-item">관계기업 지분법 손익</div>
+      <div class="col-item">투자부동산 손익</div>
+      <div class="col-item">PP&E·무형자산 처분손익</div>
+      <div class="col-item">투자 헷지 관련 손익</div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="background:rgba(239,91,141,0.08);border:1px solid rgba(239,91,141,0.2);margin-top:12px">
+    <div class="hl-head" style="color:#EF5B8D">⚠️ 충당부채 할인 주의</div>
+    <div class="hl-body">복구충당부채·소송충당부채의 <b>시간가치 증가(unwinding of discount)</b>는 재무범주가 아닌 <b>영업범주</b>로 분류됩니다. 이자비용과 혼동하지 마세요.</div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 8: 차입원가 자산화 ══ -->
+<div class="card" id="card-7" data-tag="IAS 23 연계" data-color="#5B8DEF">
+  <div class="glow" style="background:radial-gradient(circle,#5B8DEF22 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#5B8DEF">IAS 23 연계</div>
+  <div class="card-title">차입원가 자산화와<br>재무범주의 관계</div>
+  <div class="card-subtitle">IAS 23 차입원가 자산화 시 재무범주 처리 방법</div>
+  <div class="divider" style="background:#5B8DEF"></div>
+
+  <div class="def-box" style="border-color:#5B8DEF">
+    <div class="def-label" style="color:#5B8DEF">핵심 원칙</div>
+    <div class="def-text">IAS 23에 따라 <b style="color:#93C5FD">적격자산(qualifying asset)</b>과 관련된 차입원가는 자산으로 자본화(자산화)되므로, 해당 금액은 <b style="color:#93C5FD">재무범주 손익에서 제외</b>됩니다.</div>
+  </div>
+
+  <div class="flow-list">
+    <div class="flow-item">
+      <div class="flow-line-col"><div class="flow-circle" style="background:#F4A642">1</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="f-head">총 차입원가 발생</div>
+        <div class="f-body">당기에 발생한 <b>이자비용 전체</b>를 먼저 재무범주로 인식</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-line-col"><div class="flow-circle" style="background:#5B8DEF">2</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="f-head">적격자산 해당분 자산화</div>
+        <div class="f-body">건설 중인 자산 등 <b>적격자산 관련 차입원가</b> → 해당 자산의 취득원가에 가산</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-line-col"><div class="flow-circle" style="background:#00C49A">3</div><div class="flow-connector"></div></div>
+      <div class="flow-content">
+        <div class="f-head">나머지 → 재무범주 비용</div>
+        <div class="f-body">자산화되지 않은 차입원가만 <b>재무범주 이자비용</b>으로 손익 인식</div>
+      </div>
+    </div>
+    <div class="flow-item">
+      <div class="flow-line-col"><div class="flow-circle" style="background:#A855F7">!</div></div>
+      <div class="flow-content">
+        <div class="f-head">공시 요건</div>
+        <div class="f-body">자본화 차입원가 금액, 적용 자본화율을 <b>주석으로 공시</b>해야 합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 9: 확정급여 순이자 ══ -->
+<div class="card" id="card-8" data-tag="IAS 19 연계" data-color="#A855F7">
+  <div class="glow" style="background:radial-gradient(circle,#A855F722 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#A855F7">IAS 19 연계</div>
+  <div class="card-title">확정급여제도<br>순이자비용 처리</div>
+  <div class="card-subtitle">IAS 19 확정급여 관련 손익의 재무범주 처리</div>
+  <div class="divider" style="background:#A855F7"></div>
+
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">👴</span>
+      <div>
+        <div class="text-head">순이자비용 → 재무범주</div>
+        <div class="text-body">순확정급여부채(또는 자산)에 <b>할인율을 적용한 순이자비용(또는 수익)</b>은 재무범주로 분류합니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">👷</span>
+      <div>
+        <div class="text-head">당기근무원가 → 영업범주</div>
+        <div class="text-body">당기 근무에 따른 <b>급여채무 증가(당기근무원가, 과거근무원가)</b>는 영업비용으로 영업범주에 남습니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📐</span>
+      <div>
+        <div class="text-head">재측정요소 → OCI</div>
+        <div class="text-body">보험수리적손익, 사외적립자산 수익 중 순이자 초과분은 <b>기타포괄손익(OCI)</b>으로 처리됩니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📋</span>
+      <div>
+        <div class="text-head">실무 영향</div>
+        <div class="text-body">기존에 <b>퇴직급여 전액을 판관비로 처리</b>하던 기업은 순이자 부분을 재무범주로 별도 분류해야 합니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🔢</span>
+      <div>
+        <div class="text-head">계산 구조</div>
+        <div class="text-body">순이자비용 = <b>기초 순확정급여부채 × 할인율</b>. 할인율은 우량 회사채 또는 국채 수익률을 사용합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 10: CASE STUDY ══ -->
+<div class="card" id="card-9" data-tag="CASE STUDY" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">CASE STUDY</div>
+  <div class="card-title">업종별 재무범주<br>분류 사례</div>
+  <div class="card-subtitle">동일 항목도 업종에 따라 달라지는 범주 분류 비교</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <table class="comp-table" style="flex:1">
+    <tr>
+      <th style="width:32%">항목</th>
+      <th style="width:23%">일반 제조업</th>
+      <th style="width:23%">부동산업</th>
+      <th style="width:22%">금융·은행업</th>
+    </tr>
+    <tr><td><b>차입금 이자비용</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="ok">영업</td></tr>
+    <tr><td><b>사채 이자비용</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="ok">영업</td></tr>
+    <tr><td><b>리스부채 이자</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="ok">영업</td></tr>
+    <tr><td><b>ROU 감가상각</b></td><td class="ok">영업</td><td class="ok">영업</td><td class="ok">영업</td></tr>
+    <tr><td><b>이자율스왑(IRS)</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="ok">영업</td></tr>
+    <tr><td><b>CB 파생부채 평가</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="blue">모형 판단</td></tr>
+    <tr><td><b>외화차입 환산손익</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="ok">영업</td></tr>
+    <tr><td><b>퇴직급여 순이자</b></td><td class="warn">재무</td><td class="warn">재무</td><td class="warn">재무</td></tr>
+  </table>
+
+  <div class="highlight-box" style="background:rgba(244,166,66,0.08);border:1px solid rgba(244,166,66,0.2);margin-top:10px">
+    <div class="hl-head" style="color:#F4A642">💡 핵심</div>
+    <div class="hl-body">금융·은행업은 <b>이자가 주된 영업수익·비용</b>이므로 영업범주로 분류합니다. (Section 4 특정 주된 사업활동에서 상세 설명)</div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 11: vs IAS 1 ══ -->
+<div class="card" id="card-10" data-tag="vs IAS 1" data-color="#5B8DEF">
+  <div class="glow" style="background:radial-gradient(circle,#5B8DEF22 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#5B8DEF">vs IAS 1</div>
+  <div class="card-title">IAS 1 대비<br>달라지는 점</div>
+  <div class="card-subtitle">재무범주 관련 기존 기준과의 핵심 변경사항</div>
+  <div class="divider" style="background:#5B8DEF"></div>
+
+  <div class="two-col" style="flex:1">
+    <div class="col-box" style="background:rgba(100,116,139,0.08);border-color:rgba(100,116,139,0.2)">
+      <div class="col-head" style="color:#94A3B8">📋 IAS 1 (구 기준)</div>
+      <div class="col-item">이자비용 위치 기업 재량</div>
+      <div class="col-item">영업이익 위에 포함 가능</div>
+      <div class="col-item">리스이자 별도 분리 미흡</div>
+      <div class="col-item">퇴직급여 순이자 혼재</div>
+      <div class="col-item">CB 파생 손익 임의 표시</div>
+      <div class="col-item">재무구조 분석 어려움</div>
+    </div>
+    <div class="col-box" style="background:rgba(244,166,66,0.08);border-color:rgba(244,166,66,0.25)">
+      <div class="col-head" style="color:#F4A642">✨ IFRS 18 (신 기준)</div>
+      <div class="col-item">재무범주 소계 의무 표시</div>
+      <div class="col-item">영업이익 이하에만 위치</div>
+      <div class="col-item">리스이자 재무범주 분리</div>
+      <div class="col-item">퇴직급여 순이자 재무범주</div>
+      <div class="col-item">CB 파생 손익 기준 명확화</div>
+      <div class="col-item">레버리지 분석 표준화</div>
+    </div>
+  </div>
+
+  <div class="highlight-box" style="background:rgba(91,141,239,0.08);border:1px solid rgba(91,141,239,0.2);margin-top:12px">
+    <div class="hl-head" style="color:#5B8DEF">📌 영업이익 순수성 확보</div>
+    <div class="hl-body">IFRS 18 적용 후 <b>영업이익은 오직 영업활동 성과만</b> 반영합니다. 이자비용·리스이자가 영업이익 위에 섞이는 구조는 더 이상 허용되지 않습니다.</div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ CARD 12: CHECKLIST ══ -->
+<div class="card" id="card-11" data-tag="CHECKLIST" data-color="#00C49A">
+  <div class="glow" style="background:radial-gradient(circle,#00C49A22 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#00C49A">CHECKLIST</div>
+  <div class="card-title">재무범주<br>실무 체크리스트</div>
+  <div class="card-subtitle">결산 및 IFRS 18 전환 준비 시 확인 항목 6가지</div>
+  <div class="divider" style="background:#00C49A"></div>
+
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">☑️</span>
+      <div>
+        <div class="text-head">이자비용 발생원별 분류표 작성</div>
+        <div class="text-body">차입금·사채·리스·CB 등 <b>발생원별 이자비용 목록</b>을 작성하고 재무범주 해당 여부 확인</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">☑️</span>
+      <div>
+        <div class="text-head">리스부채 이자 ERP 분리</div>
+        <div class="text-body">IFRS 16 리스 스케줄에서 <b>이자비용을 별도 계정</b>으로 분리하여 재무범주로 집계되도록 ERP 설정</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">☑️</span>
+      <div>
+        <div class="text-head">차입원가 자산화 내역 확인</div>
+        <div class="text-body">IAS 23 적용 대상 자산 및 <b>자본화 금액</b>을 확인하여 재무범주 이자비용에서 차감 처리</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">☑️</span>
+      <div>
+        <div class="text-head">퇴직급여 순이자 분리 계산</div>
+        <div class="text-body">IAS 19 확정급여제도의 <b>순이자비용을 당기근무원가와 분리</b>하여 재무범주로 재분류</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">☑️</span>
+      <div>
+        <div class="text-head">외화차입 환산손익 원천 추적</div>
+        <div class="text-body">외화차입금·외화사채에서 발생한 <b>외환차손익을 재무범주로 배분</b>하는 기준 수립</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">☑️</span>
+      <div>
+        <div class="text-head">2026년 비교기간 데이터 수집</div>
+        <div class="text-body">2026년 1월부터 재무범주 기준에 맞게 <b>실시간 데이터 수집·분류</b> 시작 (소급 재작성 대비)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+
+<!-- ══ CARD 13: 신종자본증권 ══ -->
+<div class="card" id="card-12" data-tag="HYBRID INSTRUMENTS" data-color="#F4A642">
+  <div class="glow" style="background:radial-gradient(circle,#F4A64222 0%,transparent 70%)"></div>
+  <div class="section-label">SECTION 2 · 재무범주</div>
+  <div class="tag-badge" style="background:#F4A642">HYBRID INSTRUMENTS</div>
+  <div class="card-title">신종자본증권·영구채<br>재무범주 처리</div>
+  <div class="card-subtitle">자본·부채 분류에 따라 달라지는 손익 처리</div>
+  <div class="divider" style="background:#F4A642"></div>
+
+  <div class="def-box" style="border-color:#F4A642">
+    <div class="def-label" style="color:#F4A642">핵심 원칙</div>
+    <div class="def-text">신종자본증권(영구채)이 <b style="color:#FCD34D">자본으로 분류</b>되면 배당으로 처리 → 손익계산서 미표시. <b style="color:#FCD34D">부채로 분류</b>되면 이자비용 → <b style="color:#FCD34D">재무범주</b>.</div>
+  </div>
+
+  <div class="two-col" style="margin-bottom:12px">
+    <div class="col-box" style="background:rgba(0,196,154,0.06);border-color:rgba(0,196,154,0.2)">
+      <div class="col-head" style="color:#00C49A">자본 분류 시</div>
+      <div class="col-item">배당금으로 처리</div>
+      <div class="col-item">손익계산서 미반영</div>
+      <div class="col-item">자본 차감 표시</div>
+      <div class="col-item">EPS에 영향 있음</div>
+      <div class="col-item">재무범주 해당 없음</div>
+    </div>
+    <div class="col-box" style="background:rgba(244,166,66,0.06);border-color:rgba(244,166,66,0.2)">
+      <div class="col-head" style="color:#F4A642">부채 분류 시</div>
+      <div class="col-item">이자비용으로 처리</div>
+      <div class="col-item">재무범주에 표시</div>
+      <div class="col-item">유효이자율법 적용</div>
+      <div class="col-item">법인세 절감 효과</div>
+      <div class="col-item">영업이익에 영향 없음</div>
+    </div>
+  </div>
+
+  <div class="content-list" style="gap:8px;flex:unset">
+    <div class="content-item">
+      <span class="ico">⚠️</span>
+      <div>
+        <div class="text-head">분류 판단 기준 (IAS 32)</div>
+        <div class="text-body">발행자가 현금 지급을 <b>회피할 무조건적 권리</b>가 있으면 자본, 없으면 부채로 분류. 조기상환권(call option) 보유 여부, 이자 지급 임의성이 핵심입니다.</div>
+      </div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🇰🇷</span>
+      <div>
+        <div class="text-head">한국 실무 이슈</div>
+        <div class="text-body">국내 발행 신종자본증권은 대부분 <b>자본으로 분류</b>되나, 일부 조건(의무 상환 트리거 등)에 따라 부채 분류 가능. IFRS 18 전환 시 기존 분류 재검토 필요.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
+</div>
+
+<!-- ══ COPYRIGHT ══ -->
+<div class="card" id="card-13" data-tag="COPYRIGHT" data-color="#475569">
+  <div class="glow" style="background:radial-gradient(circle,#47556922 0%,transparent 70%)"></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <div style="font-size:42px;">©</div>
+      <div style="font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:#FFFFFF;letter-spacing:4px;">OSJ</div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#64748B;letter-spacing:2px;">2026. ALL RIGHTS RESERVED.</div>
+    </div>
+    <div style="width:40px;height:1px;background:rgba(255,255,255,0.15)"></div>
+    <div style="padding:18px 20px;background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.12);width:100%;">
+      <div style="font-size:11px;font-weight:700;color:#94A3B8;letter-spacing:1px;margin-bottom:8px;font-family:'Space Mono',monospace;">ENGLISH</div>
+      <div style="font-size:11.5px;color:#CBD5E1;line-height:1.9;">This material is protected under copyright law.<br>Unauthorized reproduction, distribution, transmission,<br>or disclosure to any third party is strictly prohibited.<br>Any violation may result in civil and criminal liability.</div>
+    </div>
+    <div style="padding:18px 20px;background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.12);width:100%;">
+      <div style="font-size:11px;font-weight:700;color:#94A3B8;letter-spacing:1px;margin-bottom:8px;font-family:'Space Mono',monospace;">한국어</div>
+      <div style="font-size:11.5px;color:#CBD5E1;line-height:1.9;">본 자료는 저작권법의 보호를 받습니다.<br>사전 서면 허가 없이 본 자료의 무단 복제, 배포, 전송,<br>제3자 제공 및 활용을 엄격히 금지합니다.<br>위반 시 민·형사상 법적 책임을 질 수 있습니다.</div>
+    </div>
+  </div>
+  <div class="card-footer" style="border-top:1px solid rgba(255,255,255,0.08)">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<div class="nav-area">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">←</button>
+  <div class="nav-label" id="navLabel">OVERVIEW</div>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+</div>
+<div class="hint">TAP DOTS OR USE ARROWS TO NAVIGATE</div>
+<div class="credit">created by osj</div>
+
+<script>
+  const TOTAL = 14;
+  const tagColors = {
+    "OVERVIEW":"#F4A642","BACKGROUND":"#F4A642","P&L STRUCTURE":"#F4A642",
+    "INCLUDED ①":"#F4A642","INCLUDED ②":"#F4A642","IFRS 16 연계":"#A855F7",
+    "EXCLUDED":"#EF5B8D","IAS 23 연계":"#5B8DEF","IAS 19 연계":"#A855F7",
+    "CASE STUDY":"#F4A642","vs IAS 1":"#5B8DEF","CHECKLIST":"#00C49A",
+    "HYBRID INSTRUMENTS":"#F4A642","COPYRIGHT":"#475569"
+  };
+  let current = 0;
+
+  function refreshDots() {
+    const color = tagColors[document.getElementById('card-'+current).dataset.tag] || "#F4A642";
+    document.querySelectorAll('.dots').forEach(c => {
+      c.innerHTML = '';
+      for (let i = 0; i < TOTAL; i++) {
+        const d = document.createElement('button');
+        d.className = 'dot';
+        d.style.width = i === current ? '16px' : '5px';
+        d.style.background = i === current ? color : 'rgba(255,255,255,0.2)';
+        const idx = i;
+        d.onclick = () => goTo(idx);
+        c.appendChild(d);
+      }
+    });
+  }
+
+  function goTo(idx) {
+    document.getElementById('card-'+current).classList.remove('active');
+    current = idx;
+    const card = document.getElementById('card-'+current);
+    card.classList.add('active');
+    card.style.animation = 'none'; card.offsetHeight; card.style.animation = '';
+    document.getElementById('counter').textContent = String(current+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');
+    document.getElementById('navLabel').textContent = card.dataset.tag;
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === TOTAL-1;
+    refreshDots();
+  }
+
+  function navigate(dir) { const n = current+dir; if (n >= 0 && n < TOTAL) goTo(n); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') navigate(1);
+    if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   navigate(-1);
+  });
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive:true });
+  document.addEventListener('touchend',   e => { const d=tx-e.changedTouches[0].clientX; if(Math.abs(d)>50) navigate(d>0?1:-1); }, { passive:true });
+
+  refreshDots();
+  document.getElementById('prevBtn').disabled = true;
+</script>
+</body>
+</html>

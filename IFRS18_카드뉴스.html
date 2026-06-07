@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFRS 18 카드뉴스 | K-IFRS 교육 시리즈</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0F172A;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .header-bar {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .header-bar span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #64748B;
+    letter-spacing: 2px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 480px;
+    min-height: 560px;
+    background: linear-gradient(145deg, #1E293B 0%, #172033 60%, #0F172A 100%);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.13);
+    padding: 32px 28px 28px;
+    display: none;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: fadeSlide 0.35s cubic-bezier(.4,0,.2,1) both;
+  }
+  .card.active { display: flex; }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .glow {
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .tag-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1.5px;
+    color: #060B18;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    white-space: pre-line;
+  }
+  .card-subtitle {
+    font-size: 13px;
+    color: #94A3B8;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .divider {
+    width: 40px;
+    height: 2px;
+    border-radius: 1px;
+    margin-bottom: 24px;
+  }
+
+  /* Intro rows */
+  .intro-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 10px;
+  }
+  .intro-row .lbl { font-size: 13px; color: #94A3B8; }
+  .intro-row .val { font-size: 14px; font-weight: 700; color: #FFFFFF; }
+  .intro-row .val.highlight { color: #00C49A; font-family: 'Space Mono', monospace; }
+
+  /* Content items */
+  .content-list { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .content-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    align-items: flex-start;
+  }
+  .content-item .ico { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .content-item .text-head { font-size: 13px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; }
+  .content-item .text-body { font-size: 12px; color: #94A3B8; line-height: 1.6; }
+
+  /* Structure visual */
+  .structure-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .structure-bar { width: 4px; min-height: 36px; border-radius: 2px; margin-top: 4px; flex-shrink: 0; }
+  .structure-label { font-size: 13px; font-weight: 700; }
+  .structure-sub { font-size: 11px; color: #CBD5E1; margin-top: 2px; }
+  .structure-sub.accent { color: #00C49A; font-weight: 700; }
+
+  /* Timeline */
+  .timeline-wrapper { width: 100%; margin-top: 20px; position: relative; }
+  .timeline-line {
+    position: absolute;
+    top: 18px; left: 20px; right: 20px;
+    height: 2px;
+    background: rgba(255,255,255,0.18);
+    z-index: 0;
+  }
+  .timeline-row { display: flex; justify-content: space-between; position: relative; z-index: 1; }
+  .timeline-item { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .timeline-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    margin-bottom: 8px;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+  .timeline-dot.done { background: #5B8DEF; border-color: #5B8DEF; }
+  .timeline-dot.highlight { background: #00C49A; border-color: #00C49A; box-shadow: 0 0 16px #00C49A88; }
+  .timeline-year { font-size: 10px; font-weight: 700; color: #CBD5E1; font-family: 'Space Mono', monospace; text-align: center; margin-bottom: 4px; }
+  .timeline-year.hl { color: #00C49A; }
+  .timeline-lbl { font-size: 10px; color: #94A3B8; text-align: center; line-height: 1.4; white-space: pre-line; }
+  .timeline-lbl.hl { color: #E2E8F0; }
+
+  /* Card footer */
+  .card-footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand { font-size: 10px; color: #475569; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+  .dots { display: flex; gap: 3px; }
+  .dot {
+    height: 5px; border-radius: 3px;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  .dot.active { width: 16px !important; }
+
+  /* Navigation */
+  .nav-area {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    align-items: center;
+  }
+  .nav-btn {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.13);
+    color: #CBD5E1;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.15); }
+  .nav-btn:disabled { color: #334155; cursor: not-allowed; }
+  .nav-label {
+    font-size: 11px;
+    color: #64748B;
+    font-family: 'Space Mono', monospace;
+    min-width: 100px;
+    text-align: center;
+  }
+  .hint { margin-top: 12px; font-size: 10px; color: #475569; font-family: 'Space Mono', monospace; }
+  .credit { margin-top: 8px; font-size: 10px; color: #334155; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <span>IFRS 18 EDUCATION SERIES</span>
+  <span id="counter">01 / 08</span>
+</div>
+
+<!-- ========== CARDS ========== -->
+
+<!-- Card 1: INTRO -->
+<div class="card active" id="card-0" data-tag="INTRO" data-color="#00C49A">
+  <div class="glow" style="background: radial-gradient(circle, #00C49A22 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#00C49A">INTRO</div>
+  <div class="card-title">IFRS 18이란?</div>
+  <div class="card-subtitle">IAS 1을 대체하는 새로운 재무제표 표시 기준</div>
+  <div class="divider" style="background:#00C49A"></div>
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div class="intro-row"><span class="lbl">신규 기준서</span><span class="val">IFRS 18</span></div>
+    <div class="intro-row"><span class="lbl">대체 기준서</span><span class="val">IAS 1 폐지</span></div>
+    <div class="intro-row"><span class="lbl">공표일</span><span class="val" style="font-family:'Space Mono',monospace">2023년 6월</span></div>
+    <div class="intro-row"><span class="lbl">의무 적용일</span><span class="val highlight">2027년 1월 1일</span></div>
+    <div class="intro-row"><span class="lbl">조기 적용</span><span class="val">허용</span></div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+
+<!-- Card 2: WHY -->
+<div class="card" id="card-1" data-tag="WHY" data-color="#F4A642">
+  <div class="glow" style="background: radial-gradient(circle, #F4A64222 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#F4A642">WHY</div>
+  <div class="card-title">왜 바뀌나요?</div>
+  <div class="card-subtitle">IAS 1의 한계와 개정 배경</div>
+  <div class="divider" style="background:#F4A642"></div>
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">📊</span>
+      <div><div class="text-head">비교가능성 부족</div><div class="text-body">기업마다 '영업이익' 정의가 달라 재무제표 간 비교가 어려웠습니다.</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🔍</span>
+      <div><div class="text-head">MPM 공시 부재</div><div class="text-body">경영진이 사용하는 비GAAP 지표에 대한 공시 요건이 불명확했습니다.</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📋</span>
+      <div><div class="text-head">집계·분해 원칙 미비</div><div class="text-body">주석 공시의 정보 유용성을 높이기 위한 구체적 지침이 부족했습니다.</div></div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots" id="dots2"></div>
+  </div>
+</div>
+
+<!-- Card 3: Structure -->
+<div class="card" id="card-2" data-tag="KEY CHANGE 1" data-color="#5B8DEF">
+  <div class="glow" style="background: radial-gradient(circle, #5B8DEF22 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#5B8DEF">KEY CHANGE 1</div>
+  <div class="card-title">손익계산서 구조 개편</div>
+  <div class="card-subtitle">5개 카테고리로 재편되는 포괄손익계산서</div>
+  <div class="divider" style="background:#5B8DEF"></div>
+  <div style="flex:1;">
+    <div class="structure-section">
+      <div class="structure-bar" style="background:#00C49A"></div>
+      <div><div class="structure-label" style="color:#00C49A">영업 (Operating)</div>
+        <div class="structure-sub">매출 · 매출원가 · 판관비</div>
+        <div class="structure-sub accent">→ 영업이익 소계 ★ (신설)</div>
+      </div>
+    </div>
+    <div class="structure-section">
+      <div class="structure-bar" style="background:#5B8DEF"></div>
+      <div><div class="structure-label" style="color:#5B8DEF">투자 (Investing)</div>
+        <div class="structure-sub">관계기업 투자손익 · 금융자산 처분손익</div>
+      </div>
+    </div>
+    <div class="structure-section">
+      <div class="structure-bar" style="background:#F4A642"></div>
+      <div><div class="structure-label" style="color:#F4A642">재무 (Financing)</div>
+        <div class="structure-sub">이자비용 · 차입금 관련 손익</div>
+      </div>
+    </div>
+    <div class="structure-section" style="opacity:0.6">
+      <div class="structure-bar" style="background:#94a3b8"></div>
+      <div><div class="structure-label" style="color:#94a3b8">법인세 차감전 이익</div></div>
+    </div>
+    <div class="structure-section" style="opacity:0.5">
+      <div class="structure-bar" style="background:#64748b"></div>
+      <div><div class="structure-label" style="color:#64748b">세후 기타포괄손익</div></div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- Card 4: Operating -->
+<div class="card" id="card-3" data-tag="KEY CHANGE 2" data-color="#5B8DEF">
+  <div class="glow" style="background: radial-gradient(circle, #5B8DEF22 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#5B8DEF">KEY CHANGE 2</div>
+  <div class="card-title">영업이익 소계 신설</div>
+  <div class="card-subtitle">표준화된 영업이익 정의 도입</div>
+  <div class="divider" style="background:#5B8DEF"></div>
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">✅</span>
+      <div><div class="text-head">영업이익 표시 의무화</div><div class="text-body">모든 기업이 동일한 기준으로 영업이익 소계를 표시해야 합니다.</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🔄</span>
+      <div><div class="text-head">투자·재무 손익 분리</div><div class="text-body">영업외손익이 투자활동 손익과 재무활동 손익으로 명확히 구분됩니다.</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">⚖️</span>
+      <div><div class="text-head">지분법 처리 변화</div><div class="text-body">관계기업·공동기업 투자는 사업모형에 따라 영업 또는 투자로 분류됩니다.</div></div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- Card 5: MPM -->
+<div class="card" id="card-4" data-tag="KEY CHANGE 3" data-color="#EF5B8D">
+  <div class="glow" style="background: radial-gradient(circle, #EF5B8D22 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#EF5B8D">KEY CHANGE 3</div>
+  <div class="card-title">MPM 공시 요건</div>
+  <div class="card-subtitle">경영자 성과지표 (Management Performance Measures)</div>
+  <div class="divider" style="background:#EF5B8D"></div>
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">📌</span>
+      <div><div class="text-head">MPM이란?</div><div class="text-body">경영진이 내·외부에 사용하는 IFRS 기준 소계 외의 성과지표 (예: 조정 EBITDA)</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📎</span>
+      <div><div class="text-head">공시 항목</div><div class="text-body">IFRS 소계와의 조정표, 세효과, 사용 이유 및 유용한 정보 설명 등을 주석 공시</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🚫</span>
+      <div><div class="text-head">공시 제외 항목</div><div class="text-body">주당이익(EPS), 다른 IFRS에서 요구하는 지표는 MPM에서 제외됩니다.</div></div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- Card 6: Disaggregation -->
+<div class="card" id="card-5" data-tag="KEY CHANGE 4" data-color="#A855F7">
+  <div class="glow" style="background: radial-gradient(circle, #A855F722 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#A855F7">KEY CHANGE 4</div>
+  <div class="card-title">집계 및 분해 원칙</div>
+  <div class="card-subtitle">정보 유용성 중심의 주석 공시 체계</div>
+  <div class="divider" style="background:#A855F7"></div>
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">🧩</span>
+      <div><div class="text-head">집계 원칙</div><div class="text-body">특성이 유사한 항목은 묶고, 상이한 항목은 분리해서 표시합니다.</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">🔬</span>
+      <div><div class="text-head">분해 공시</div><div class="text-body">비용의 성격별·기능별 분해, 수익·비용의 주요 구성요소 공시가 강화됩니다.</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">📐</span>
+      <div><div class="text-head">목적 기반 접근</div><div class="text-body">규정 준수보다 '재무정보 이용자에게 유용한가'를 판단 기준으로 삼습니다.</div></div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- Card 7: Timeline -->
+<div class="card" id="card-6" data-tag="TIMELINE" data-color="#00C49A">
+  <div class="glow" style="background: radial-gradient(circle, #00C49A22 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#00C49A">TIMELINE</div>
+  <div class="card-title">시행 일정</div>
+  <div class="card-subtitle">지금 준비를 시작해야 합니다</div>
+  <div class="divider" style="background:#00C49A"></div>
+  <div class="timeline-wrapper">
+    <div class="timeline-line"></div>
+    <div class="timeline-row">
+      <div class="timeline-item">
+        <div class="timeline-dot done">✓</div>
+        <div class="timeline-year">2023.06</div>
+        <div class="timeline-lbl">IFRS 18 공표</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot done">✓</div>
+        <div class="timeline-year">2026</div>
+        <div class="timeline-lbl">조기 적용 가능</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2026.01</div>
+        <div class="timeline-lbl">비교기간 시작&#10;(2026 데이터)</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot highlight"></div>
+        <div class="timeline-year hl">2027.01</div>
+        <div class="timeline-lbl hl">의무 적용 시작&#10;★ K-IFRS 도입</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:28px; padding:16px; background:rgba(0,196,154,0.09); border-radius:12px; border:1px solid rgba(0,196,154,0.2);">
+    <div style="font-size:13px; font-weight:700; color:#00C49A; margin-bottom:6px;">⚠️ 핵심 포인트</div>
+    <div style="font-size:12px; color:#94A3B8; line-height:1.6;">2027년 의무 적용을 위해 2026년부터 비교 공시용 데이터를 새 기준에 맞게 수집·관리해야 합니다.</div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- Card 8: Action -->
+<div class="card" id="card-7" data-tag="ACTION" data-color="#F4A642">
+  <div class="glow" style="background: radial-gradient(circle, #F4A64222 0%, transparent 70%)"></div>
+  <div class="tag-badge" style="background:#F4A642">ACTION</div>
+  <div class="card-title" style="font-size:28px">우리 회사는&#10;어떻게 준비할까?</div>
+  <div class="card-subtitle">실무 체크리스트</div>
+  <div class="divider" style="background:#F4A642"></div>
+  <div class="content-list">
+    <div class="content-item">
+      <span class="ico">1️⃣</span>
+      <div><div class="text-head">현행 손익계산서 분석</div><div class="text-body">영업·투자·재무 구분 기준 재검토</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">2️⃣</span>
+      <div><div class="text-head">MPM 대상 지표 식별</div><div class="text-body">경영진 보고에 사용 중인 비GAAP 지표 목록화</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">3️⃣</span>
+      <div><div class="text-head">IT·시스템 검토</div><div class="text-body">새로운 분류체계 반영을 위한 ERP 수정 필요성 평가</div></div>
+    </div>
+    <div class="content-item">
+      <span class="ico">4️⃣</span>
+      <div><div class="text-head">비교 공시 준비</div><div class="text-body">2026년 재무자료부터 비교기간 재작성 시뮬레이션 착수</div></div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+
+<!-- COPYRIGHT PAGE -->
+<div class="card" id="card-8" data-tag="COPYRIGHT" data-color="#475569">
+  <div class="glow" style="background:radial-gradient(circle,#47556922 0%,transparent 70%)"></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;">
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <div style="font-size:42px;">©</div>
+      <div style="font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:#FFFFFF;letter-spacing:4px;">OSJ</div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#64748B;letter-spacing:2px;">2026. ALL RIGHTS RESERVED.</div>
+    </div>
+
+    <div style="width:40px;height:1px;background:rgba(255,255,255,0.15)"></div>
+
+    <div style="padding:18px 20px;background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.12);width:100%;">
+      <div style="font-size:11px;font-weight:700;color:#94A3B8;letter-spacing:1px;margin-bottom:8px;font-family:'Space Mono',monospace;">ENGLISH</div>
+      <div style="font-size:11.5px;color:#CBD5E1;line-height:1.9;">
+        This material is protected under copyright law.<br>
+        Unauthorized reproduction, distribution, transmission,<br>
+        or disclosure to any third party is strictly prohibited.<br>
+        Any violation may result in civil and criminal liability.
+      </div>
+    </div>
+
+    <div style="padding:18px 20px;background:rgba(255,255,255,0.05);border-radius:14px;border:1px solid rgba(255,255,255,0.12);width:100%;">
+      <div style="font-size:11px;font-weight:700;color:#94A3B8;letter-spacing:1px;margin-bottom:8px;font-family:'Space Mono',monospace;">한국어</div>
+      <div style="font-size:11.5px;color:#CBD5E1;line-height:1.9;">
+        본 자료는 저작권법의 보호를 받습니다.<br>
+        사전 서면 허가 없이 본 자료의 무단 복제, 배포, 전송,<br>
+        제3자 제공 및 활용을 엄격히 금지합니다.<br>
+        위반 시 민·형사상 법적 책임을 질 수 있습니다.
+      </div>
+    </div>
+
+  </div>
+  <div class="card-footer" style="border-top:1px solid rgba(255,255,255,0.08)">
+    <span class="footer-brand">K-IFRS EDUCATION 2026</span>
+    <div class="dots"></div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav-area">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">←</button>
+  <div class="nav-label" id="navLabel">INTRO</div>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+</div>
+<div class="hint">TAP DOTS OR USE ARROWS TO NAVIGATE</div>
+<div class="credit">created by osj</div>
+
+<script>
+  const TOTAL = 9;
+  let current = 0;
+
+  const tagColors = {
+    "INTRO": "#00C49A",
+    "WHY": "#F4A642",
+    "KEY CHANGE 1": "#5B8DEF",
+    "KEY CHANGE 2": "#5B8DEF",
+    "KEY CHANGE 3": "#EF5B8D",
+    "KEY CHANGE 4": "#A855F7",
+    "TIMELINE": "#00C49A",
+    "ACTION": "#F4A642"
+  };
+
+  function buildDots(containerId) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+    el.innerHTML = '';
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('button');
+      d.className = 'dot' + (i === current ? ' active' : '');
+      const tag = document.getElementById('card-' + current).dataset.tag;
+      d.style.width = i === current ? '16px' : '5px';
+      d.style.background = i === current ? tagColors[tag] : 'rgba(255,255,255,0.1)';
+      d.setAttribute('aria-label', 'Card ' + (i + 1));
+      d.onclick = () => goTo(i);
+      el.appendChild(d);
+    }
+  }
+
+  function getAllDotContainers() {
+    return document.querySelectorAll('.dots');
+  }
+
+  function refreshDots() {
+    const tag = document.getElementById('card-' + current).dataset.tag;
+    const color = tagColors[tag];
+    getAllDotContainers().forEach(container => {
+      container.innerHTML = '';
+      for (let i = 0; i < TOTAL; i++) {
+        const d = document.createElement('button');
+        d.className = 'dot' + (i === current ? ' active' : '');
+        d.style.width = i === current ? '16px' : '5px';
+        d.style.background = i === current ? color : 'rgba(255,255,255,0.1)';
+        d.setAttribute('aria-label', 'Card ' + (i + 1));
+        const idx = i;
+        d.onclick = () => goTo(idx);
+        container.appendChild(d);
+      }
+    });
+  }
+
+  function goTo(idx) {
+    document.getElementById('card-' + current).classList.remove('active');
+    current = idx;
+    const card = document.getElementById('card-' + current);
+    card.classList.add('active');
+    // re-trigger animation
+    card.style.animation = 'none';
+    card.offsetHeight;
+    card.style.animation = '';
+
+    document.getElementById('counter').textContent =
+      String(current + 1).padStart(2, '0') + ' / ' + String(TOTAL).padStart(2, '0');
+    document.getElementById('navLabel').textContent = card.dataset.tag;
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === TOTAL - 1;
+    refreshDots();
+  }
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next < 0 || next >= TOTAL) return;
+    goTo(next);
+  }
+
+  // Keyboard support
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  });
+
+  // Touch swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Init
+  refreshDots();
+  document.getElementById('prevBtn').disabled = true;
+</script>
+</body>
+</html>
