@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>K-IFRS 18 | 교육 카드뉴스 시리즈</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { height: -webkit-fill-available; }
+
+  body {
+    background: #0F172A;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #E2E8F0;
+    padding: 40px 20px 60px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* 헤더 */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #64748B;
+    border: 1px solid #1E293B;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .header-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .header-title span {
+    background: linear-gradient(135deg, #5B8DEF, #A855F7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #64748B;
+    line-height: 1.7;
+  }
+  .divider {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, #5B8DEF, #A855F7);
+    border-radius: 1px;
+    margin: 20px auto;
+  }
+
+  /* 카드 목록 */
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card-link {
+    display: block;
+    text-decoration: none;
+    background: linear-gradient(145deg, #1E293B 0%, #172033 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 22px 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-link:hover, .card-link:active {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+
+  .card-glow {
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .card-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .card-text { flex: 1; }
+  .card-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+  }
+  .card-desc {
+    font-size: 11.5px;
+    color: #64748B;
+    line-height: 1.5;
+  }
+
+  .card-arrow {
+    font-size: 18px;
+    color: #334155;
+    flex-shrink: 0;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .card-link:hover .card-arrow {
+    color: #94A3B8;
+    transform: translateX(3px);
+  }
+
+  /* 섹션 구분 */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #334155;
+    padding: 0 4px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  /* 푸터 */
+  .footer {
+    text-align: center;
+    margin-top: 48px;
+  }
+  .footer-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: #334155;
+    letter-spacing: 1px;
+  }
+
+  /* 2027 배너 */
+  .banner {
+    background: rgba(91,141,239,0.08);
+    border: 1px solid rgba(91,141,239,0.2);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .banner-icon { font-size: 22px; flex-shrink: 0; }
+  .banner-text { font-size: 12px; color: #93C5FD; line-height: 1.6; }
+  .banner-text b { color: #BFDBFE; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-badge">K-IFRS EDUCATION SERIES · OSJ 2026</div>
+    <div class="header-title">IFRS 18<br><span>완전 정복</span> 카드뉴스</div>
+    <div class="divider"></div>
+    <div class="header-sub">새로운 손익계산서 표시 기준을<br>6개 시리즈로 완벽하게 이해합니다</div>
+  </div>
+
+  <!-- 배너 -->
+  <div class="banner">
+    <div class="banner-icon">📅</div>
+    <div class="banner-text"><b>2027년 1월 1일</b> 의무 적용 예정<br>지금부터 준비가 필요합니다</div>
+  </div>
+
+  <!-- 카드 목록 -->
+  <div class="section-label">INTRO</div>
+  <div class="card-list">
+
+    <!-- 인트로 -->
+    <a class="card-link" href="IFRS18_카드뉴스.html" style="border-color:rgba(91,141,239,0.25)">
+      <div class="card-glow" style="background:radial-gradient(circle,#5B8DEF22 0%,transparent 70%)"></div>
+      <div class="card-inner">
+        <div class="card-icon" style="background:rgba(91,141,239,0.15)">📋</div>
+        <div class="card-text">
+          <div class="card-num" style="color:#5B8DEF">INTRO · 도입편</div>
+          <div class="card-title">IFRS 18 핵심 개요</div>
+          <div class="card-desc">새 기준서의 배경과 핵심 변화 한눈에 보기</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="section-label" style="margin-top:20px">SECTIONS</div>
+  <div class="card-list">
+
+    <!-- Section 1 -->
+    <a class="card-link" href="IFRS18_Section1_투자범주.html" style="border-color:rgba(91,141,239,0.2)">
+      <div class="card-glow" style="background:radial-gradient(circle,#5B8DEF1A 0%,transparent 70%)"></div>
+      <div class="card-inner">
+        <div class="card-icon" style="background:rgba(91,141,239,0.12)">📈</div>
+        <div class="card-text">
+          <div class="card-num" style="color:#5B8DEF">SECTION 1</div>
+          <div class="card-title">투자범주</div>
+          <div class="card-desc">투자활동 손익의 정의·포함·제외 항목과 실무 적용</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+
+    <!-- Section 2 -->
+    <a class="card-link" href="IFRS18_Section2_재무범주.html" style="border-color:rgba(244,166,66,0.2)">
+      <div class="card-glow" style="background:radial-gradient(circle,#F4A6421A 0%,transparent 70%)"></div>
+      <div class="card-inner">
+        <div class="card-icon" style="background:rgba(244,166,66,0.12)">🏦</div>
+        <div class="card-text">
+          <div class="card-num" style="color:#F4A642">SECTION 2</div>
+          <div class="card-title">재무범주</div>
+          <div class="card-desc">부채·자본 조달 관련 손익 분류와 이자비용 처리</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+
+    <!-- Section 3 -->
+    <a class="card-link" href="IFRS18_Section3_영업범주.html" style="border-color:rgba(0,196,154,0.2)">
+      <div class="card-glow" style="background:radial-gradient(circle,#00C49A1A 0%,transparent 70%)"></div>
+      <div class="card-inner">
+        <div class="card-icon" style="background:rgba(0,196,154,0.12)">⚙️</div>
+        <div class="card-text">
+          <div class="card-num" style="color:#00C49A">SECTION 3</div>
+          <div class="card-title">영업범주</div>
+          <div class="card-desc">영업이익 의무 소계와 영업 관련 손익 범위</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+
+    <!-- Section 4 -->
+    <a class="card-link" href="IFRS18_Section4_특정한주된사업활동.html" style="border-color:rgba(239,91,141,0.2)">
+      <div class="card-glow" style="background:radial-gradient(circle,#EF5B8D1A 0%,transparent 70%)"></div>
+      <div class="card-inner">
+        <div class="card-icon" style="background:rgba(239,91,141,0.12)">🏢</div>
+        <div class="card-text">
+          <div class="card-num" style="color:#EF5B8D">SECTION 4</div>
+          <div class="card-title">특정한 주된 사업활동</div>
+          <div class="card-desc">금융·부동산 등 특수 업종의 범주 분류 특례</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+
+    <!-- Section 5 -->
+    <a class="card-link" href="IFRS18_Section5_MPM및경과규정.html" style="border-color:rgba(168,85,247,0.2)">
+      <div class="card-glow" style="background:radial-gradient(circle,#A855F71A 0%,transparent 70%)"></div>
+      <div class="card-inner">
+        <div class="card-icon" style="background:rgba(168,85,247,0.12)">📊</div>
+        <div class="card-text">
+          <div class="card-num" style="color:#A855F7">SECTION 5</div>
+          <div class="card-title">MPM 및 경과규정</div>
+          <div class="card-desc">경영진 성과지표 공시 요건과 전환 시 경과 조치</div>
+        </div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- 푸터 -->
+  <div class="footer">
+    <div class="footer-text">© OSJ 2026 · K-IFRS EDUCATION · ALL RIGHTS RESERVED</div>
+  </div>
+
+</div>
+</body>
+</html>
