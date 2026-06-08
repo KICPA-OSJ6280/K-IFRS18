@@ -345,6 +345,12 @@
     line-height: 1.5;
     margin-bottom: 6px;
   }
+  .mpm-q .mq-cond {
+    font-size: 10px;
+    color: #94A3B8;
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
   .mpm-q .mq-ex {
     font-size: 10px;
     color: #7C3AED;
@@ -430,7 +436,7 @@
     <div class="badge">DECISION FLOWCHART · K-IFRS 18</div>
     <h1>손익 분류<br><span>의사결정 흐름도</span></h1>
     <div class="title-divider"></div>
-    <p>손익항목의 범주를 단계별 판단으로<br>재무·투자·영업 중 하나에 배분합니다</p>
+    <p>손익항목을 IFRS 18의 영업·투자·재무·법인세·중단영업<br>범주로 단계별 분류합니다</p>
   </div>
 
   <!-- 플로우차트 -->
@@ -448,12 +454,12 @@
       <div class="tip">▼</div>
     </div>
 
-    <!-- STEP 1: 재무범주 -->
+    <!-- STEP 1: 중단영업범주 -->
     <div class="decision-row">
       <div class="diamond">
         <div class="d-step">STEP 1</div>
-        <div class="d-title">재무활동<br>관련 손익인가?</div>
-        <div class="d-desc">부채·자본 조달 및<br>상환과 직접 관련된<br>손익 여부</div>
+        <div class="d-title">중단영업<br>관련 세후손익인가?</div>
+        <div class="d-desc">중단영업으로 분류된<br>구성단위의 세후손익 및<br>처분 관련 세후손익 여부</div>
       </div>
       <div class="yes-col">
         <div class="yes-arrow-row">
@@ -461,11 +467,11 @@
           <div class="yes-line"></div>
           <span class="yes-tip">▶</span>
         </div>
-        <a href="IFRS18_Section2_재무범주.html" class="result-card" style="background:rgba(244,166,66,0.1);border:1px solid rgba(244,166,66,0.3)">
-          <div class="rc-section" style="color:#F4A642">SECTION 2</div>
-          <div class="rc-title" style="color:#FCD34D">재무범주 🏦</div>
-          <div class="rc-desc">이자비용·배당금·<br>차입금 관련 손익</div>
-        </a>
+        <div class="result-card" style="background:rgba(100,116,139,0.12);border:1px solid rgba(100,116,139,0.3)">
+          <div class="rc-section" style="color:#94A3B8">CATEGORY</div>
+          <div class="rc-title" style="color:#CBD5E1">중단영업범주 🏳️</div>
+          <div class="rc-desc">중단영업으로 분류된<br>구성단위의 세후손익 및<br>처분 관련 세후손익</div>
+        </div>
       </div>
     </div>
 
@@ -476,12 +482,40 @@
       <div class="tip">▼</div>
     </div>
 
-    <!-- STEP 2: 특정한 주된 사업활동 -->
+    <!-- STEP 2: 법인세범주 -->
     <div class="decision-row">
       <div class="diamond">
         <div class="d-step">STEP 2</div>
-        <div class="d-title">특정 주된<br>사업활동 해당?</div>
-        <div class="d-desc">금융·보험·부동산 등<br>업종 특례 적용<br>대상 여부</div>
+        <div class="d-title">법인세<br>수익·비용인가?</div>
+        <div class="d-desc">당기법인세 및<br>이연법인세 관련<br>수익 또는 비용 여부</div>
+      </div>
+      <div class="yes-col">
+        <div class="yes-arrow-row">
+          <span class="yes-tag">YES</span>
+          <div class="yes-line"></div>
+          <span class="yes-tip">▶</span>
+        </div>
+        <div class="result-card" style="background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3)">
+          <div class="rc-section" style="color:#FBBF24">CATEGORY</div>
+          <div class="rc-title" style="color:#FDE68A">법인세범주 🧾</div>
+          <div class="rc-desc">법인세비용 또는<br>법인세수익</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ↓ NO -->
+    <div class="arrow-col">
+      <div class="line"></div>
+      <div class="no-tag">NO</div>
+      <div class="tip">▼</div>
+    </div>
+
+    <!-- STEP 3: 특정한 주된 사업활동 -->
+    <div class="decision-row">
+      <div class="diamond">
+        <div class="d-step">STEP 3</div>
+        <div class="d-title">특정한 주된<br>사업활동 해당?</div>
+        <div class="d-desc">자산 투자 또는<br>고객 금융제공이<br>주된 사업활동인가?<br><span style="color:#475569;font-size:9.5px">업종명이 아닌 실제 사업활동·<br>내부보고·수익구조를 종합 판단</span></div>
       </div>
       <div class="yes-col">
         <div class="yes-arrow-row">
@@ -492,7 +526,7 @@
         <a href="IFRS18_Section4_특정한주된사업활동.html" class="result-card" style="background:rgba(239,91,141,0.1);border:1px solid rgba(239,91,141,0.3)">
           <div class="rc-section" style="color:#EF5B8D">SECTION 4</div>
           <div class="rc-title" style="color:#F9A8D4">특정 주된 사업활동 🏢</div>
-          <div class="rc-desc">업종별 특례 규정<br>적용 후 범주 결정</div>
+          <div class="rc-desc">자산 투자 또는 고객 금융제공<br>관련 일부 수익·비용의 범주를<br>Section 4 기준으로 판단</div>
         </a>
       </div>
     </div>
@@ -504,12 +538,40 @@
       <div class="tip">▼</div>
     </div>
 
-    <!-- STEP 3: 투자범주 -->
+    <!-- STEP 4: 재무범주 -->
     <div class="decision-row">
       <div class="diamond">
-        <div class="d-step">STEP 3</div>
-        <div class="d-title">투자활동<br>관련 손익인가?</div>
-        <div class="d-desc">투자자산으로부터<br>수익 창출 또는<br>자본 운용 목적</div>
+        <div class="d-step">STEP 4</div>
+        <div class="d-title">재무범주<br>수익·비용인가?</div>
+        <div class="d-desc">자금조달 목적 부채 또는<br>기타 부채의 이자 성격<br>수익·비용인지 판단</div>
+      </div>
+      <div class="yes-col">
+        <div class="yes-arrow-row">
+          <span class="yes-tag">YES</span>
+          <div class="yes-line"></div>
+          <span class="yes-tip">▶</span>
+        </div>
+        <a href="IFRS18_Section2_재무범주.html" class="result-card" style="background:rgba(244,166,66,0.1);border:1px solid rgba(244,166,66,0.3)">
+          <div class="rc-section" style="color:#F4A642">SECTION 2</div>
+          <div class="rc-title" style="color:#FCD34D">재무범주 🏦</div>
+          <div class="rc-desc">차입금 이자·리스부채 이자·<br>충당부채 할인액 증가·<br>외화차입금 관련 손익</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ↓ NO -->
+    <div class="arrow-col">
+      <div class="line"></div>
+      <div class="no-tag">NO</div>
+      <div class="tip">▼</div>
+    </div>
+
+    <!-- STEP 5: 투자범주 -->
+    <div class="decision-row">
+      <div class="diamond">
+        <div class="d-step">STEP 5</div>
+        <div class="d-title">투자범주<br>수익·비용인가?</div>
+        <div class="d-desc">다른 자원과 대체로<br>독립적으로 수익을 창출하는<br>자산 또는 지분법 투자 등에서<br>발생한 손익인지 판단</div>
       </div>
       <div class="yes-col">
         <div class="yes-arrow-row">
@@ -520,7 +582,7 @@
         <a href="IFRS18_Section1_투자범주.html" class="result-card" style="background:rgba(91,141,239,0.1);border:1px solid rgba(91,141,239,0.3)">
           <div class="rc-section" style="color:#5B8DEF">SECTION 1</div>
           <div class="rc-title" style="color:#93C5FD">투자범주 📈</div>
-          <div class="rc-desc">배당수익·이자수익·<br>투자자산 처분손익</div>
+          <div class="rc-desc">금융자산 손익·투자부동산 손익·<br>지분법손익·일반기업의<br>수취이자/배당금</div>
         </a>
       </div>
     </div>
@@ -532,11 +594,11 @@
       <div class="tip">▼</div>
     </div>
 
-    <!-- RESULT: 영업범주 (잔여) -->
+    <!-- RESULT: 영업범주 (기본범주) -->
     <a href="IFRS18_Section3_영업범주.html" class="residual-box" style="text-decoration:none;display:block;transition:transform .15s,box-shadow .15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(0,0,0,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div class="rb-label">SECTION 3 · RESIDUAL CATEGORY</div>
+      <div class="rb-label">SECTION 3 · DEFAULT CATEGORY</div>
       <div class="rb-title">영업범주 ⚙️</div>
-      <div class="rb-desc">위 세 단계 어디에도 해당하지 않는 모든 손익<br>→ 잔여범주인 영업범주로 자동 분류</div>
+      <div class="rb-desc">투자범주·재무범주·법인세범주·중단영업범주에<br>분류되지 않는 모든 수익·비용<br>→ 기본범주인 영업범주로 분류</div>
     </a>
 
     <!-- 구분선 -->
@@ -547,13 +609,14 @@
       <div class="mpm-header">MPM DISCLOSURE · SECTION 5 · 별도 판단</div>
       <div class="mpm-flow">
         <div class="mpm-q">
-          <div class="mq-title">경영진이 IFRS 18 비요구 소계를 외부 공시하는가?</div>
+          <div class="mq-title">재무제표 밖 공개 커뮤니케이션에서 사용하는 손익 소계인가?</div>
+          <div class="mq-cond">경영진의 재무성과 관점을 전달하고, IFRS가 요구하거나 특정한 소계가 아닌 경우 → 요건 충족 시 MPM 후보</div>
           <div class="mq-ex">예: 조정 EBITDA, 조정 영업이익</div>
         </div>
         <div class="mpm-arrow-col">→</div>
         <div class="mpm-result">
           <div class="mr-title">MPM 공시 요건 적용 📊</div>
-          <div class="mr-desc">주석에 GAAP 소계와의 조정표 의무 공시</div>
+          <div class="mr-desc">단일 주석에 IFRS 총계 또는 소계와의 조정표, 조정항목 설명, 법인세 효과, 비지배지분 효과 등을 공시</div>
         </div>
       </div>
     </div>
@@ -562,8 +625,10 @@
 
   <!-- 범례 -->
   <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#F4A642"></div>재무범주 (S2)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#94A3B8"></div>중단영업범주</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#FBBF24"></div>법인세범주</div>
     <div class="legend-item"><div class="legend-dot" style="background:#EF5B8D"></div>특정 주된 사업활동 (S4)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F4A642"></div>재무범주 (S2)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#5B8DEF"></div>투자범주 (S1)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#00C49A"></div>영업범주 (S3)</div>
     <div class="legend-item"><div class="legend-dot" style="background:#A855F7"></div>MPM (S5)</div>
