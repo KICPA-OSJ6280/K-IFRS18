@@ -85,12 +85,13 @@
   .red  { color:#F87171 !important; }
 
   /* 영업이익 계산식 */
-  .calc-box { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:16px; text-align:center; margin-bottom:12px; }
-  .calc-row { font-family:'Space Mono',monospace; font-size:12px; color:#E2E8F0; padding:4px 0; display:flex; justify-content:space-between; align-items:center; }
+  .calc-box { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px; margin-bottom:12px; }
+  .calc-row { font-family:'Space Mono',monospace; font-size:11px; color:#E2E8F0; padding:3px 0; display:flex; justify-content:space-between; align-items:center; }
   .calc-row .label { color:#94A3B8; text-align:left; }
   .calc-row .amt { font-weight:700; }
-  .calc-divider { height:1px; background:rgba(255,255,255,0.1); margin:6px 0; }
-  .calc-total { font-size:13px; font-weight:700; color:#00C49A; }
+  .calc-divider { height:1px; background:rgba(255,255,255,0.1); margin:5px 0; }
+  .calc-total { font-size:12px; font-weight:700; color:#00C49A; }
+  .calc-subtotal2 { font-size:11px; font-weight:700; color:#93C5FD; }
 
   .card-footer { margin-top:18px; padding-top:13px; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center; }
   .footer-brand { font-size:10px; color:#475569; font-family:'Space Mono',monospace; letter-spacing:1px; }
@@ -111,7 +112,7 @@
 <div class="header-bar">
   <a href="index.html" class="home-btn">⌂ 목차</a>
   <span class="series">IFRS 18 · SECTION 3 OF 5 · 영업범주</span>
-  <span class="counter" id="counter">01 / 12</span>
+  <span class="counter" id="counter">01 / 14</span>
 </div>
 
 <!-- ══ CARD 1: OVERVIEW ══ -->
@@ -125,29 +126,29 @@
 
   <div class="def-box" style="border-color:#00C49A">
     <div class="def-label" style="color:#00C49A">IFRS 18 공식 정의</div>
-    <div class="def-text">기업의 <b style="color:#6EE7B7">주된 사업활동</b>에서 발생하는 모든 수익과 비용. 투자범주·재무범주에 해당하지 않는 <b style="color:#6EE7B7">모든 손익항목이 기본적으로 영업범주</b>에 포함됩니다. IFRS 18은 영업범주의 소계인 <b style="color:#6EE7B7">영업이익을 의무적으로 표시</b>하도록 규정합니다.</div>
+    <div class="def-text">투자범주·재무범주·법인세범주·중단영업범주에 분류되지 않는 <b style="color:#6EE7B7">모든 수익과 비용이 기본적으로 영업범주에 포함</b>되는 <b style="color:#6EE7B7">잔여범주(default category)</b>입니다. IFRS 18은 영업범주의 소계인 <b style="color:#6EE7B7">영업손익을 의무적으로 표시</b>하도록 규정합니다.</div>
   </div>
 
   <div class="content-list">
     <div class="content-item">
       <span class="ico">⭐</span>
       <div>
-        <div class="text-head">영업이익 소계 의무화 — 핵심 변화</div>
-        <div class="text-body">IAS 1에서는 영업이익 표시가 임의였으나, IFRS 18에서는 <b>모든 기업이 반드시 영업이익 소계를 표시</b>해야 합니다.</div>
+        <div class="text-head">영업손익 소계 의무화 — 핵심 변화</div>
+        <div class="text-body">IAS 1에서는 영업이익 표시가 임의였으나, IFRS 18에서는 <b>모든 기업이 반드시 영업손익 소계를 표시</b>해야 합니다.</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">🔲</span>
       <div>
-        <div class="text-head">잔여범주 역할</div>
-        <div class="text-body">영업범주는 <b>투자범주·재무범주에 해당하지 않는 모든 항목</b>을 포함하는 기본 범주입니다. 단, 특정 주된 사업활동(Section 4)에 의해 재분류될 수 있습니다.</div>
+        <div class="text-head">잔여범주(Default Category) 역할</div>
+        <div class="text-body">영업범주는 별도의 포함 기준이 아닌, <b>다른 4개 범주에 해당하지 않는 모든 항목을 포함</b>하는 기본 범주입니다. 특정 주된 사업활동(Section 4)에 의해 범주가 달라질 수 있습니다.</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">🎯</span>
       <div>
-        <div class="text-head">순수한 영업성과 반영</div>
-        <div class="text-body">이자비용·투자손익이 제거된 <b>순수 영업활동 성과</b>만을 반영하여 기업 간 비교가능성이 대폭 향상됩니다.</div>
+        <div class="text-head">비교가능성 향상</div>
+        <div class="text-body">이자비용·투자손익이 제거된 <b>순수 영업활동 성과</b>만을 반영하여 기업 간·기간 간 비교가능성이 개선됩니다.</div>
       </div>
     </div>
   </div>
@@ -174,14 +175,14 @@
     <div class="content-item">
       <span class="ico">📉</span>
       <div>
-        <div class="text-head">비GAAP 지표 남용</div>
-        <div class="text-body">기업들이 <b>조정 EBITDA, 조정 영업이익</b> 등 자의적 지표를 공표하여 실제 성과보다 좋게 보이게 하는 문제가 빈번했습니다.</div>
+        <div class="text-head">비교가능성 저하</div>
+        <div class="text-body">기업들이 <b>조정 EBITDA, 조정 영업이익</b> 등 자체 정의 지표를 공표함으로써 투자자의 기업 간 비교가 어려워졌습니다.</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">🧭</span>
       <div>
-        <div class="text-head">투자자 혼란 가중</div>
+        <div class="text-head">투자자 정보 비대칭</div>
         <div class="text-body">투자자·분석가들이 기업별로 영업이익 정의를 파악하고 조정하는 데 <b>불필요한 시간과 비용</b>이 소요됐습니다.</div>
       </div>
     </div>
@@ -189,14 +190,14 @@
       <span class="ico">✅</span>
       <div>
         <div class="text-head">IFRS 18의 해결</div>
-        <div class="text-body">영업이익 소계를 <b>의무화하고 표시 기준을 표준화</b>하여 기업 간 비교가능성과 투명성을 동시에 확보했습니다.</div>
+        <div class="text-body">영업손익 소계를 <b>의무화하고 표시 기준을 표준화</b>하여 기업 간 비교가능성과 투명성을 동시에 확보했습니다.</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">📌</span>
       <div>
         <div class="text-head">MPM과의 관계</div>
-        <div class="text-body">기업이 자체 조정 지표(MPM)를 외부에 공표하는 경우, <b>IFRS 18 영업이익과의 조정표를 주석으로 의무 공시</b>해야 합니다.</div>
+        <div class="text-body">기업이 자체 조정 지표(MPM)를 외부에 공표하는 경우, <b>IFRS 18 영업손익과의 조정표를 주석으로 의무 공시</b>해야 합니다. 이는 금지가 아닌 투명성 제고 목적입니다.</div>
       </div>
     </div>
   </div>
@@ -208,29 +209,33 @@
   <div class="glow" style="background:radial-gradient(circle,#00C49A22 0%,transparent 70%)"></div>
   <div class="section-label">SECTION 3 · 영업범주</div>
   <div class="tag-badge" style="background:#00C49A">P&L STRUCTURE</div>
-  <div class="card-title">영업이익 소계<br>표시 구조</div>
-  <div class="card-subtitle">IFRS 18 포괄손익계산서의 영업범주 표시 방법</div>
+  <div class="card-title">손익계산서<br>표시 구조</div>
+  <div class="card-subtitle">IFRS 18 손익계산서의 범주별 표시 및 의무 소계</div>
   <div class="divider" style="background:#00C49A"></div>
 
   <div class="calc-box">
-    <div class="calc-row"><span class="label">매출액 (Revenue)</span><span class="amt" style="color:#6EE7B7">XXX</span></div>
-    <div class="calc-row"><span class="label">매출원가 (COGS)</span><span class="amt" style="color:#F87171">( XXX )</span></div>
+    <div class="calc-row"><span class="label">① 영업범주 수익·비용 항목</span><span class="amt" style="color:#6EE7B7">XXX</span></div>
     <div class="calc-divider"></div>
-    <div class="calc-row"><span class="label" style="color:#CBD5E1;font-weight:700;">매출총이익</span><span class="amt" style="color:#CBD5E1;">XXX</span></div>
-    <div class="calc-row"><span class="label">판매비와관리비</span><span class="amt" style="color:#F87171">( XXX )</span></div>
-    <div class="calc-row"><span class="label">기타 영업손익</span><span class="amt" style="color:#6EE7B7">XXX</span></div>
+    <div class="calc-row calc-total"><span>영업손익 ★ (의무 소계)</span><span>XXX</span></div>
     <div class="calc-divider"></div>
-    <div class="calc-row calc-total"><span>영업이익 ★ (의무 소계)</span><span>XXX</span></div>
+    <div class="calc-row"><span class="label" style="color:#93C5FD;">② 투자범주 수익·비용 항목</span><span class="amt" style="color:#93C5FD;">XXX</span></div>
     <div class="calc-divider"></div>
-    <div class="calc-row"><span class="label" style="color:#93C5FD;">투자범주 소계</span><span class="amt" style="color:#93C5FD;">XXX</span></div>
-    <div class="calc-row"><span class="label" style="color:#FCD34D;">재무범주 소계</span><span class="amt" style="color:#FCD34D;">( XXX )</span></div>
+    <div class="calc-row calc-subtotal2"><span>금융·법인세 차감 전 손익 ★ (의무 소계)</span><span>XXX</span></div>
     <div class="calc-divider"></div>
-    <div class="calc-row"><span class="label">법인세비용차감전이익</span><span class="amt">XXX</span></div>
+    <div class="calc-row"><span class="label" style="color:#FCD34D;">③ 재무범주 수익·비용 항목</span><span class="amt" style="color:#FCD34D;">( XXX )</span></div>
+    <div class="calc-divider"></div>
+    <div class="calc-row"><span class="label">법인세비용 차감 전 계속영업손익</span><span class="amt">XXX</span></div>
+    <div class="calc-row"><span class="label">④ 법인세비용</span><span class="amt" style="color:#F87171">( XXX )</span></div>
+    <div class="calc-divider"></div>
+    <div class="calc-row"><span class="label">계속영업손익</span><span class="amt">XXX</span></div>
+    <div class="calc-row"><span class="label">⑤ 중단영업손익</span><span class="amt">XXX</span></div>
+    <div class="calc-divider"></div>
+    <div class="calc-row" style="font-size:12px;font-weight:700;"><span style="color:#E2E8F0;">당기손익</span><span style="color:#6EE7B7;">XXX</span></div>
   </div>
 
   <div class="highlight-box" style="background:rgba(0,196,154,0.08);border:1px solid rgba(0,196,154,0.2)">
-    <div class="hl-head" style="color:#00C49A">📌 소계 표시 위치 규정</div>
-    <div class="hl-body">영업이익 소계는 <b>투자범주·재무범주 항목보다 반드시 위에 위치</b>해야 합니다. 영업이익 아래에 영업 관련 항목이 오는 것은 금지됩니다.</div>
+    <div class="hl-head" style="color:#00C49A">📌 의무 소계 2개</div>
+    <div class="hl-body">IFRS 18은 <b>① 영업손익</b>과 <b>② 금융·법인세 차감 전 손익</b> 두 개의 소계를 의무화합니다. "투자범주 소계"·"재무범주 소계"라는 별도 소계는 요구하지 않습니다.</div>
   </div>
   <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
 </div>
@@ -276,8 +281,8 @@
     <div class="content-item">
       <span class="ico">🌐</span>
       <div>
-        <div class="text-head">매출 관련 외환손익</div>
-        <div class="text-body">외화 매출채권·선수금의 <b>환산손익</b>은 영업활동에서 발생하므로 영업범주로 분류</div>
+        <div class="text-head">영업 관련 외화 환산손익</div>
+        <div class="text-body">외화 매출채권 등 <b>화폐성 영업 항목의 환산손익</b>은 영업활동에서 발생하므로 영업범주로 분류 (선수금 등 비화폐성 항목 제외)</div>
       </div>
     </div>
   </div>
@@ -298,7 +303,7 @@
       <span class="ico">👔</span>
       <div>
         <div class="text-head">판매비와관리비 (SG&A)</div>
-        <div class="text-body">급여·복리후생, 광고선전비, 접대비, 감가상각비(영업용 자산), <b>연구개발비(IFRS 38)</b> 등</div>
+        <div class="text-body">급여·복리후생, 광고선전비, 접대비, 감가상각비(영업용 자산), <b>연구개발비(IAS 38)</b> 등</div>
       </div>
     </div>
     <div class="content-item">
@@ -312,7 +317,7 @@
       <span class="ico">⚖️</span>
       <div>
         <div class="text-head">충당부채 전입·환입</div>
-        <div class="text-body">제품보증충당부채, 소송충당부채, 구조조정충당부채 등 <b>영업활동 관련 충당부채</b>의 전입·환입</div>
+        <div class="text-body">제품보증충당부채, 소송충당부채, 구조조정충당부채 등 <b>영업활동 관련 충당부채</b>의 최초 인식 및 재측정 (할인액 증가분 제외)</div>
       </div>
     </div>
     <div class="content-item">
@@ -323,10 +328,10 @@
       </div>
     </div>
     <div class="content-item">
-      <span class="ico">🤝</span>
+      <span class="ico">🏗️</span>
       <div>
-        <div class="text-head">영업 목적 관계기업 지분법</div>
-        <div class="text-body">주된 사업활동의 일부인 관계·공동기업 투자의 <b>지분법 손익</b> (Section 4 참조)</div>
+        <div class="text-head">영업용 PP&E·무형자산 처분손익</div>
+        <div class="text-body">영업에 사용하던 유형자산·무형자산 처분손익은 잔여범주 원칙상 <b>영업범주 해당 가능성 검토 필요</b>. 투자 목적 자산과 구분할 것.</div>
       </div>
     </div>
   </div>
@@ -372,10 +377,10 @@
       </div>
     </div>
     <div class="content-item">
-      <span class="ico">🔁</span>
+      <span class="ico">⚠️</span>
       <div>
-        <div class="text-head">충당부채 할인액 증가 (Unwinding)</div>
-        <div class="text-body">복구충당부채 등 <b>영업활동 충당부채의 시간가치 증가분</b> → 재무범주 아닌 영업범주에 포함</div>
+        <div class="text-head" style="color:#F87171">충당부채 할인액 증가 — 주의: 재무범주</div>
+        <div class="text-body">복구충당부채 등 충당부채의 <b>시간가치 증가분(unwinding of discount)</b>은 이자 성격으로 <b style="color:#F87171">재무범주</b>에 분류합니다. 영업범주로 오분류하지 않도록 주의.</div>
       </div>
     </div>
   </div>
@@ -387,8 +392,8 @@
   <div class="glow" style="background:radial-gradient(circle,#00C49A22 0%,transparent 70%)"></div>
   <div class="section-label">SECTION 3 · 영업범주</div>
   <div class="tag-badge" style="background:#00C49A">OPERATING PROFIT</div>
-  <div class="card-title">영업이익 소계<br>의무화 규정 상세</div>
-  <div class="card-subtitle">IFRS 18이 규정하는 영업이익 표시의 세부 요건</div>
+  <div class="card-title">영업손익 소계<br>의무화 규정 상세</div>
+  <div class="card-subtitle">IFRS 18이 규정하는 영업손익 표시의 세부 요건</div>
   <div class="divider" style="background:#00C49A"></div>
 
   <div class="flow-list">
@@ -403,28 +408,28 @@
       <div class="flow-line-col"><div class="flow-circle" style="background:#00C49A">2</div><div class="flow-connector"></div></div>
       <div class="flow-content">
         <div class="f-head">위치 규정</div>
-        <div class="f-body">영업이익 소계는 <b>투자범주 및 재무범주 항목보다 반드시 위에</b> 표시해야 합니다.</div>
+        <div class="f-body">영업손익 소계는 <b>투자범주 및 재무범주 항목보다 반드시 위에</b> 표시해야 합니다.</div>
       </div>
     </div>
     <div class="flow-item">
       <div class="flow-line-col"><div class="flow-circle" style="background:#00C49A">3</div><div class="flow-connector"></div></div>
       <div class="flow-content">
         <div class="f-head">추가 소계 표시</div>
-        <div class="f-body">영업범주 내에서 <b>매출총이익 등 추가 소계</b>를 표시하는 것은 허용됩니다. (단, 오해를 줄 수 있는 소계는 금지)</div>
+        <div class="f-body">영업범주 내에서 <b>매출총이익 등 추가 소계</b>를 표시하는 것은 허용됩니다. 단, 정보 이용자에게 오해를 유발할 수 있는 소계는 지양해야 합니다.</div>
       </div>
     </div>
     <div class="flow-item">
       <div class="flow-line-col"><div class="flow-circle" style="background:#F4A642">4</div><div class="flow-connector"></div></div>
       <div class="flow-content">
         <div class="f-head">MPM과의 연계</div>
-        <div class="f-body">기업이 외부에 <b>조정 영업이익 등 MPM을 공표</b>하는 경우 IFRS 18 영업이익과의 조정표를 주석 공시해야 합니다.</div>
+        <div class="f-body">기업이 외부에 <b>조정 영업이익 등 MPM을 공표</b>하는 경우 IFRS 18 영업손익과의 조정표를 주석 공시해야 합니다.</div>
       </div>
     </div>
     <div class="flow-item">
-      <div class="flow-line-col"><div class="flow-circle" style="background:#EF5B8D">!</div></div>
+      <div class="flow-line-col"><div class="flow-circle" style="background:#64748B">5</div></div>
       <div class="flow-content">
-        <div class="f-head">오해 유발 소계 금지</div>
-        <div class="f-body">영업이익보다 <b>더 좋은 성과를 나타내는 것처럼 보이는 임의 소계</b>를 영업이익보다 강조하는 방식은 금지됩니다.</div>
+        <div class="f-head">소계의 명확한 표시</div>
+        <div class="f-body">손익계산서 내 소계는 <b>포함된 항목의 범위를 명확히 나타내는 명칭</b>으로 표시해야 하며, IFRS 18 의무 소계와 혼동되지 않아야 합니다.</div>
       </div>
     </div>
   </div>
@@ -445,25 +450,23 @@
       <div class="col-head" style="color:#5B8DEF">→ 투자범주로</div>
       <div class="col-item">금융자산 이자·배당수익</div>
       <div class="col-item">금융자산 평가·처분손익</div>
-      <div class="col-item">비영업 관계기업 지분법</div>
+      <div class="col-item">관계기업·공동기업 지분법손익 (전 업종)</div>
       <div class="col-item">투자부동산 손익</div>
-      <div class="col-item">PP&E·무형자산 처분손익</div>
-      <div class="col-item">투자목적 자산 ECL</div>
+      <div class="col-item">투자목적 자산 손상(ECL)</div>
     </div>
     <div class="col-box" style="background:rgba(244,166,66,0.06);border-color:rgba(244,166,66,0.2)">
       <div class="col-head" style="color:#F4A642">→ 재무범주로</div>
       <div class="col-item">차입금·사채 이자비용</div>
       <div class="col-item">리스부채 이자비용</div>
-      <div class="col-item">CB 파생부채 평가손익</div>
-      <div class="col-item">외화차입 환산손익</div>
-      <div class="col-item">이자율스왑 손익</div>
       <div class="col-item">확정급여 순이자비용</div>
+      <div class="col-item">충당부채 할인액 증가분</div>
+      <div class="col-item">자금조달 관련 외화 환산손익</div>
     </div>
   </div>
 
   <div class="highlight-box" style="background:rgba(239,91,141,0.08);border:1px solid rgba(239,91,141,0.2);margin-top:12px">
-    <div class="hl-head" style="color:#EF5B8D">⚠️ PP&E 처분손익 주의</div>
-    <div class="hl-body">기존에 <b>영업외수익·비용으로 처리</b>하던 유형자산 처분손익은 IFRS 18에서 <b>투자범주</b>로 이동합니다. 영업이익에서 제외됩니다.</div>
+    <div class="hl-head" style="color:#EF5B8D">📌 투자범주 판단 기준</div>
+    <div class="hl-body">투자범주는 <b>독립적으로 수익을 창출하는 자산</b>에서 발생하는 손익입니다. 영업에 사용하는 유형자산·무형자산의 처분손익은 잔여범주 원칙상 영업범주 해당 여부를 검토해야 합니다. 지분법손익은 업종에 관계없이 <b>전 업종 투자범주</b>로 분류합니다.</div>
   </div>
   <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
 </div>
@@ -500,8 +503,8 @@
     <div class="content-item">
       <span class="ico">📌</span>
       <div>
-        <div class="text-head">기능별 선택 시 추가 공시 의무</div>
-        <div class="text-body">기능별 방법을 사용하면 <b>감가상각비·상각비·인건비</b> 총액을 주석으로 반드시 공시해야 합니다.</div>
+        <div class="text-head">기능별 선택 시 주석 공시 의무 (5가지)</div>
+        <div class="text-body">기능별 방법을 사용하면 다음 5가지 성격별 정보를 주석으로 반드시 공시해야 합니다: <b>감가상각비·무형자산상각비·종업원급여비용·비금융자산 손상차손(환입)·재고자산 평가감(환입)</b></div>
       </div>
     </div>
     <div class="content-item">
@@ -521,7 +524,7 @@
   <div class="section-label">SECTION 3 · 영업범주</div>
   <div class="tag-badge" style="background:#F4A642">CASE STUDY</div>
   <div class="card-title">영업범주 분류<br>실무 사례 비교</div>
-  <div class="card-subtitle">IAS 1 vs IFRS 18 — 영업이익에 미치는 실제 영향</div>
+  <div class="card-subtitle">IAS 1 vs IFRS 18 — 항목별 분류 변경 내용</div>
   <div class="divider" style="background:#F4A642"></div>
 
   <table class="comp-table" style="flex:1">
@@ -532,17 +535,17 @@
     </tr>
     <tr><td><b>매출·매출원가</b></td><td class="ok">영업 ✓</td><td class="ok">영업 ✓ (동일)</td></tr>
     <tr><td><b>판관비</b></td><td class="ok">영업 ✓</td><td class="ok">영업 ✓ (동일)</td></tr>
-    <tr><td><b>PP&E 처분손익</b></td><td class="warn">영업외 (임의)</td><td class="blue">투자범주</td></tr>
+    <tr><td><b>영업용 PP&E 처분손익</b></td><td class="warn">영업외 (임의)</td><td class="ok">영업범주 검토</td></tr>
     <tr><td><b>리스 감가상각</b></td><td class="ok">영업</td><td class="ok">영업 ✓ (동일)</td></tr>
     <tr><td><b>리스부채 이자</b></td><td class="warn">영업 or 기타</td><td class="warn">재무범주</td></tr>
-    <tr><td><b>관계기업 지분법</b></td><td class="warn">영업외 (임의)</td><td class="warn">사업모형 판단</td></tr>
+    <tr><td><b>관계기업 지분법</b></td><td class="warn">영업외 (임의)</td><td class="blue">투자범주 (전 업종)</td></tr>
     <tr><td><b>퇴직급여 순이자</b></td><td class="warn">판관비 혼재</td><td class="warn">재무범주</td></tr>
     <tr><td><b>외화 매출채권 환산</b></td><td class="warn">임의 위치</td><td class="ok">영업</td></tr>
   </table>
 
   <div class="highlight-box" style="background:rgba(244,166,66,0.08);border:1px solid rgba(244,166,66,0.2);margin-top:10px">
-    <div class="hl-head" style="color:#F4A642">💡 영업이익 변화 방향</div>
-    <div class="hl-body">대부분 기업에서 IFRS 18 적용 시 <b>영업이익은 증가</b>합니다. PP&E 처분손실·리스이자가 영업이익 아래로 이동하기 때문입니다.</div>
+    <div class="hl-head" style="color:#F4A642">💡 영업손익 변화 방향</div>
+    <div class="hl-body">IFRS 18 적용 시 영업손익 변화 방향은 <b>기업별로 다르며</b>, 리스이자·지분법·퇴직급여 순이자 등의 규모와 방향에 따라 증감 여부가 결정됩니다.</div>
   </div>
   <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
 </div>
@@ -561,7 +564,7 @@
       <div class="col-head" style="color:#94A3B8">📋 IAS 1 (구 기준)</div>
       <div class="col-item">영업이익 표시 임의</div>
       <div class="col-item">영업이익 정의 없음</div>
-      <div class="col-item">PP&E 처분을 영업外로 분류</div>
+      <div class="col-item">영업외수익·비용 개념 혼용</div>
       <div class="col-item">리스이자 위치 재량</div>
       <div class="col-item">관계기업 손익 위치 자유</div>
       <div class="col-item">비용 분해 공시 미흡</div>
@@ -569,19 +572,19 @@
     </div>
     <div class="col-box" style="background:rgba(0,196,154,0.08);border-color:rgba(0,196,154,0.25)">
       <div class="col-head" style="color:#00C49A">✨ IFRS 18 (신 기준)</div>
-      <div class="col-item">영업이익 소계 의무화</div>
+      <div class="col-item">영업손익 소계 의무화</div>
       <div class="col-item">영업범주 적극 정의</div>
-      <div class="col-item">PP&E 처분 → 투자범주</div>
+      <div class="col-item">잔여범주 원칙 적용</div>
       <div class="col-item">리스이자 → 재무범주</div>
-      <div class="col-item">관계기업 손익 사업모형 판단</div>
-      <div class="col-item">비용 분해 공시 강화</div>
+      <div class="col-item">지분법 → 투자범주 (전 업종)</div>
+      <div class="col-item">비용 분해 공시 강화 (5가지)</div>
       <div class="col-item">MPM 공시 의무화</div>
     </div>
   </div>
 
   <div class="highlight-box" style="background:rgba(0,196,154,0.08);border:1px solid rgba(0,196,154,0.2);margin-top:12px">
-    <div class="hl-head" style="color:#00C49A">📌 영업이익 = 비교가능한 성과지표</div>
-    <div class="hl-body">IFRS 18 도입 후 <b>동일 기준으로 계산된 영업이익</b>을 기업 간·기간 간 비교할 수 있게 됩니다.</div>
+    <div class="hl-head" style="color:#00C49A">📌 비교가능성 개선</div>
+    <div class="hl-body">IFRS 18 도입 후 표준화된 영업손익 정의로 <b>기업 간·기간 간 비교가능성이 개선</b>됩니다. 단, 완전한 동일 기준 비교를 위해서는 특정 주된 사업활동 예외 여부도 함께 확인해야 합니다.</div>
   </div>
   <div class="card-footer"><span class="footer-brand">K-IFRS EDUCATION 2026</span><div class="dots"></div></div>
 </div>
@@ -599,15 +602,15 @@
     <div class="content-item">
       <span class="ico">☑️</span>
       <div>
-        <div class="text-head">영업이익 소계 표시 형식 설계</div>
-        <div class="text-body">현행 손익계산서 양식을 검토하고 <b>영업이익 소계 위치와 표시 형식</b>을 IFRS 18 요건에 맞게 재설계</div>
+        <div class="text-head">영업손익 소계 표시 형식 설계</div>
+        <div class="text-body">현행 손익계산서 양식을 검토하고 <b>영업손익 소계 위치와 표시 형식</b>을 IFRS 18 요건에 맞게 재설계</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">☑️</span>
       <div>
-        <div class="text-head">PP&E 처분손익 재분류</div>
-        <div class="text-body">기존 영업외수익·비용의 <b>PP&E·무형자산 처분손익을 투자범주</b>로 이동하고 영업이익에서 제거</div>
+        <div class="text-head">PP&E·무형자산 처분손익 분류 검토</div>
+        <div class="text-body">보유 자산별로 <b>영업 목적(영업범주) vs 투자 목적(투자범주)</b>을 구분하고 처분손익 분류 기준을 문서화</div>
       </div>
     </div>
     <div class="content-item">
@@ -620,22 +623,22 @@
     <div class="content-item">
       <span class="ico">☑️</span>
       <div>
-        <div class="text-head">관계기업 지분법 범주 판단</div>
-        <div class="text-body">보유 중인 관계·공동기업별로 <b>사업모형 판단 문서를 작성</b>하여 영업 또는 투자 범주 결정</div>
+        <div class="text-head">관계·공동기업 지분법 범주 확인</div>
+        <div class="text-body">관계·공동기업 지분법손익은 업종·사업모형에 관계없이 <b>전 업종 투자범주로 분류</b>. 기존 영업 처리 여부 점검.</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">☑️</span>
       <div>
         <div class="text-head">비용 표시 방법 및 분해 공시 검토</div>
-        <div class="text-body">성격별·기능별 방법 선택 여부 재확인, <b>IFRS 18 강화된 분해 공시 요건</b>에 맞는 주석 초안 작성</div>
+        <div class="text-body">성격별·기능별 방법 선택 여부 재확인, <b>IFRS 18 강화된 5가지 분해 공시 요건</b>에 맞는 주석 초안 작성</div>
       </div>
     </div>
     <div class="content-item">
       <span class="ico">☑️</span>
       <div>
         <div class="text-head">조정 영업이익(MPM) 공시 준비</div>
-        <div class="text-body">경영진이 외부에 공표 중인 <b>조정 영업이익 지표를 목록화</b>하고 IFRS 18 영업이익과의 조정표 초안 작성</div>
+        <div class="text-body">경영진이 외부에 공표 중인 <b>조정 영업이익 지표를 목록화</b>하고 IFRS 18 영업손익과의 조정표 초안 작성</div>
       </div>
     </div>
   </div>
@@ -682,8 +685,8 @@
     <div class="content-item">
       <span class="ico">📝</span>
       <div>
-        <div class="text-head">주석 분해 공시 강화</div>
-        <div class="text-body">재무제표 본문에서 집계된 항목은 <b>주석에서 구성요소를 분해하여 공시</b>해야 합니다. 특히 수익·비용의 주요 구성요소 공시가 강화됩니다.</div>
+        <div class="text-head">주석 분해 공시</div>
+        <div class="text-body">재무제표 본문에서 집계된 항목 중 <b>중요한 항목은 주석에서 구성요소를 분해하여 공시</b>할 수 있습니다. 중요성 원칙에 따라 판단하며, 모든 집계 항목의 분해가 일률적으로 요구되지는 않습니다.</div>
       </div>
     </div>
     <div class="content-item">
